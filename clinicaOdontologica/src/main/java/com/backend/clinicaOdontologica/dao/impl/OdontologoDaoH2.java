@@ -1,17 +1,16 @@
-package src.com.backend.parcial.dao.impl;
+package com.backend.clinicaOdontologica.dao.impl;
 
-import src.com.backend.parcial.dao.IDao;
-
+import com.backend.clinicaOdontologica.dao.IDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.backend.clinicaOdontologica.dbconnection.H2Connection;
+import com.backend.clinicaOdontologica.entity.Odontologo;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-import src.com.backend.parcial.dbconnection.H2Connection;
-import src.com.backend.parcial.entity.Odontologo;
-
 public class OdontologoDaoH2 implements IDao<Odontologo> {
-    private final Logger LOGGER = Logger.getLogger(OdontologoDaoH2.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(DomicilioDaoH2.class);
 
     @Override
     public Odontologo guardar(Odontologo odontologo) {
@@ -100,6 +99,11 @@ public class OdontologoDaoH2 implements IDao<Odontologo> {
         }
         return odontologos;
 
+    }
+
+    @Override
+    public Odontologo buscarPorId(int id) {
+        return null;
     }
 
 

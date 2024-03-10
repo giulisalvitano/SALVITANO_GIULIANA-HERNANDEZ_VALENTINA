@@ -7,10 +7,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.beans.BeanProperty;
-import java.sql.Connection;
-import java.sql.DriverManager;
-
 @SpringBootApplication
 public class ClinicaOdontologicaApplication {
 
@@ -18,7 +14,7 @@ public class ClinicaOdontologicaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ClinicaOdontologicaApplication.class, args);
-		LOGGER.info("ClinicaOdontologica is now running...");
+		LOGGER.info("ClinicaOdontologica está corriendo...");
 	}
 
 

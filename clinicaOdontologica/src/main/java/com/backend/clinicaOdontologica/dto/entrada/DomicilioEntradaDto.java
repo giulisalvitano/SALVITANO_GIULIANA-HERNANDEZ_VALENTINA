@@ -1,7 +1,5 @@
 package com.backend.clinicaOdontologica.dto.entrada;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

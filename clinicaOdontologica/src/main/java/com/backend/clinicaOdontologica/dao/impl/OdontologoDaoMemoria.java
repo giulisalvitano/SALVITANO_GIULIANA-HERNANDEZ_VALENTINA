@@ -1,11 +1,13 @@
-package src.com.backend.parcial.dao.impl;
-import src.com.backend.parcial.dao.IDao;
-import src.com.backend.parcial.entity.Odontologo;
-import org.apache.log4j.Logger;
+package com.backend.clinicaOdontologica.dao.impl;
+
+import com.backend.clinicaOdontologica.dao.IDao;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.backend.clinicaOdontologica.entity.Odontologo;
 import java.util.List;
 
 public class OdontologoDaoMemoria implements IDao<Odontologo> {
-    private final Logger LOGGER = Logger.getLogger(OdontologoDaoMemoria.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(DomicilioDaoH2.class);
     private List<Odontologo> OdontologoRepositorio;
 
 
@@ -30,5 +32,10 @@ public class OdontologoDaoMemoria implements IDao<Odontologo> {
 
         LOGGER.info("Todos los odontologos: " + OdontologoRepositorio);
         return OdontologoRepositorio;
+    }
+
+    @Override
+    public Odontologo buscarPorId(int id) {
+        return null;
     }
 }

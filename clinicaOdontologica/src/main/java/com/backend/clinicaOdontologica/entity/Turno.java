@@ -2,11 +2,21 @@ package com.backend.clinicaOdontologica.entity;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "TURNOS")
 public class Turno {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    
+    @ManyToOne(mappedBy = "odontologo", cascade = CascadeType.REMOVE) //si se borra el odontologo se borrara el turno
+    @JoinColumn(name = "odontologo_id") // un odontologo puede tener muchos turnos
     private Odontologo odontologo;
+
+    @OneToOne(mappedBy = "paciente", cascade = CascadeType.REMOVE) //si se borra el paciente se borrara el turno
+    @JoinColumn(name = "paciente_id") // un odontologo puede tener muchos turnos
     private Paciente paciente;
+    
     private LocalDateTime fechaYHora;
 
     public Turno() {

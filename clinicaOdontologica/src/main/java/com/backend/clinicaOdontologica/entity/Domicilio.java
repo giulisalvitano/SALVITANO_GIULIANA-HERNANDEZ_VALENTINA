@@ -1,7 +1,12 @@
 package com.backend.clinicaOdontologica.entity;
 
+@Entity
+@Table(name = "DOMICILIOS")
 public class Domicilio {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
+    
     private String calle;
     private int numero;
     private String localidad;

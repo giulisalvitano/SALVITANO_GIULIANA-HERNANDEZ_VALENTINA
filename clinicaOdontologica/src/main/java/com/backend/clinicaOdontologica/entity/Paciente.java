@@ -1,5 +1,6 @@
 package com.backend.clinicaOdontologica.entity;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity

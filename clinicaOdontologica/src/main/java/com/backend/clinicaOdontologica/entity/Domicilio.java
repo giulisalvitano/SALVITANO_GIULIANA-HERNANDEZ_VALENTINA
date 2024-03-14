@@ -1,10 +1,12 @@
 package com.backend.clinicaOdontologica.entity;
 
+import javax.persistence.*;
+
 @Entity
 @Table(name = "DOMICILIOS")
 public class Domicilio {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
     
     private String calle;

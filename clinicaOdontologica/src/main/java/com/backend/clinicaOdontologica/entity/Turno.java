@@ -1,5 +1,6 @@
 package com.backend.clinicaOdontologica.entity;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -8,8 +9,7 @@ public class Turno {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    
-    @ManyToOne(mappedBy = "odontologo", cascade = CascadeType.REMOVE) //si se borra el odontologo se borrara el turno
+
     @JoinColumn(name = "odontologo_id") // un odontologo puede tener muchos turnos
     private Odontologo odontologo;
 

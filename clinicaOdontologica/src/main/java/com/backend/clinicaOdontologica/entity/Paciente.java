@@ -2,12 +2,20 @@ package com.backend.clinicaOdontologica.entity;
 
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "PACIENTES")
 public class Paciente {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    
     private String nombre;
     private String apellido;
     private int dni;
     private LocalDate fechaIngreso;
+
+    @OneToOne(mappedBy = "paciente", cascade = CascadeType.REMOVE) //si se borra el paciente se borrara el domicilio
+    @JoinColumn(name = "domicilio_id") // un paciente tiene un domicilio, y un domicilio tiene un paciente
     private Domicilio domicilio;
 
 

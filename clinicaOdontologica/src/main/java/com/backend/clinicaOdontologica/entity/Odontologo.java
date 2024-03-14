@@ -1,10 +1,19 @@
 package com.backend.clinicaOdontologica.entity;
 
+@Entity
+@Table(name = "ODONTOLOGOS")
 public class Odontologo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    
     private String matricula;
     private String nombre;
     private String apellido;
+
+    @OneToOne(mappedBy = "odontologo", cascade = CascadeType.REMOVE) //si se borra el odontologo de borrara el domicilio
+    @JoinColumn(name = "domicilio_id") // un odontologo tiene un domicilio
+    private Domicilio domicilio;
 
 
     public Odontologo(String matricula, String nombre, String apellido) {

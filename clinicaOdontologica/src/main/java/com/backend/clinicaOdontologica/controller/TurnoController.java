@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/turnos")
+
 public class TurnoController {
 
     private ITurnoService turnoService;
@@ -26,7 +27,7 @@ public class TurnoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TurnoSalidaDto> buscarTurnoPorId(@PathVariable int id) {
+    public ResponseEntity<TurnoSalidaDto> buscarTurnoPorId(@PathVariable Long id) {
         return new ResponseEntity<>(turnoService.buscarTurnoPorId(id), HttpStatus.OK);
     }
 

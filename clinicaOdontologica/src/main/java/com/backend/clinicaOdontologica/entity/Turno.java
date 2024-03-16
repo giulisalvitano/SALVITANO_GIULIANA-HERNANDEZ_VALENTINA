@@ -8,13 +8,14 @@ import java.time.LocalDateTime;
 public class Turno {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
+    @ManyToOne
     @JoinColumn(name = "odontologo_id") // un odontologo puede tener muchos turnos
     private Odontologo odontologo;
 
-    @OneToOne(mappedBy = "paciente", cascade = CascadeType.REMOVE) //si se borra el paciente se borrara el turno
-    @JoinColumn(name = "paciente_id") // un odontologo puede tener muchos turnos
+    @ManyToOne
+    @JoinColumn(name = "paciente_id") // un paciente puede tener muchos turnos
     private Paciente paciente;
     
     private LocalDateTime fechaYHora;
@@ -28,18 +29,18 @@ public class Turno {
         this.fechaYHora = fechaYHora;
     }
 
-    public Turno(int id, Odontologo odontologo, Paciente paciente, LocalDateTime fechaYHora) {
+    public Turno(Long id, Odontologo odontologo, Paciente paciente, LocalDateTime fechaYHora) {
         this.id = id;
         this.odontologo = odontologo;
         this.paciente = paciente;
         this.fechaYHora = fechaYHora;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -66,4 +67,15 @@ public class Turno {
     public void setFechaYHora(LocalDateTime fechaYHora) {
         this.fechaYHora = fechaYHora;
     }
+
+    @Override
+    public String toString() {
+        return "Turno{" +
+                "id=" + id +
+                ", ontology=" + odontologo +
+                ", paciente=" + paciente +
+                ", fechaYHora=" + fechaYHora +
+                '}';
+    }
+
 }

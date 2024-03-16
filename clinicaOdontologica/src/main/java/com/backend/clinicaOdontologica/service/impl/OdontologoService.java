@@ -1,27 +1,35 @@
 package com.backend.clinicaOdontologica.service.impl;
 
-import com.backend.clinicaOdontologica.dao.IDao;
 import com.backend.clinicaOdontologica.entity.Odontologo;
+import com.backend.clinicaOdontologica.repository.OdontologoRepository;
 import com.backend.clinicaOdontologica.service.IOdontologoService;
+import org.apache.logging.log4j.core.Logger;
+import org.modelmapper.ModelMapper;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class OdontologoService implements IOdontologoService {
-    private final IDao<Odontologo> odontologoIDao;
+    private final Logger LOGGER = (Logger) LoggerFactory.getLogger(OdontologoService.class);
+    private OdontologoRepository odontologoRepository;
+    private ModelMapper modelMapper;
 
-    public OdontologoService(IDao<Odontologo> odontologoIDao) {
-        this.odontologoIDao = odontologoIDao;
+    public OdontologoService(OdontologoRepository odontologoRepository, ModelMapper modelMapper) {
+        this.odontologoRepository = odontologoRepository;
+        this.modelMapper = modelMapper;
     }
+
 
     @Override
     public Odontologo guardarOdontologo(Odontologo odontologo) {
-        return odontologoIDao.guardar(odontologo);
+        return odontologoRepository.save(odontologo);
     }
 
-    @Override
+
     public List<Odontologo> listarOdontologos() {
-        return odontologoIDao.listarTodos();
+        return odontologoRepository.findAll();
     }
+
 
 }
 

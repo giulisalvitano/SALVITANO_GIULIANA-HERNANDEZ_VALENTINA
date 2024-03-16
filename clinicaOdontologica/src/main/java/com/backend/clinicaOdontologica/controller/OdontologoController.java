@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/odontologos")
 public class OdontologoController {
-
     private final IOdontologoService odontologoService; // Servicio para realizar operaciones con odontólogos
     private final ModelMapper modelMapper; // Mapper para realizar mapeos entre objetos
 

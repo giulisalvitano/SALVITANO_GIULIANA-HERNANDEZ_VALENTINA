@@ -33,7 +33,7 @@ public class TurnoDaoH2 implements IDao<Turno> {
 
             // Prepara y ejecuta la sentencia SQL para insertar un turno en la tabla TURNOS
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO TURNOS (ODONTOLOGO_ID, PACIENTE_ID, FECHA_Y_HORA) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1, turno.getOdontologo().getId());
+            preparedStatement.setLong(1, turno.getOdontologo().getId());
             preparedStatement.setLong(2, turno.getPaciente().getId());
             preparedStatement.setTimestamp(3, Timestamp.valueOf(turno.getFechaYHora()));
             preparedStatement.execute();
@@ -44,7 +44,7 @@ public class TurnoDaoH2 implements IDao<Turno> {
             // Obtiene el ID generado y lo asigna al turno registrado
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             while (resultSet.next()) {
-                turnoRegistrado.setId(resultSet.getInt("id"));
+                turnoRegistrado.setId(resultSet.getLong("id"));
             }
 
             // Confirma la transacción

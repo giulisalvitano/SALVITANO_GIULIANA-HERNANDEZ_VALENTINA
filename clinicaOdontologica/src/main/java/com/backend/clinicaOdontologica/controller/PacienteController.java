@@ -12,7 +12,7 @@ import javax.validation.Valid;
 
 import java.util.List;
 
-@RestController //@ResponseBody + @Controller
+@RestController
 @RequestMapping("/pacientes")
 public class PacienteController {
 
@@ -28,10 +28,11 @@ public class PacienteController {
         return new ResponseEntity<>(pacienteService.listarPacientes(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}") //localhost:8080/pacientes/x
-    public ResponseEntity<PacienteSalidaDto> buscarPacientePorId(@PathVariable int id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<PacienteSalidaDto> buscarPacientePorId(@PathVariable Long id) {
         return new ResponseEntity<>(pacienteService.buscarPacientePorId(id), HttpStatus.OK);
     }
+
 
 
     //POST

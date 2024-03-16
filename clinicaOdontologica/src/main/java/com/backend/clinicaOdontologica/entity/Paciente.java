@@ -8,11 +8,18 @@ import java.time.LocalDate;
 public class Paciente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    
+    private Long id;
+
+    @Column(nullable = false, length = 50)
     private String nombre;
+
+    @Column(nullable = false, length = 50)
     private String apellido;
+
+    @Column(nullable = false, length = 8,unique = true)
     private int dni;
+
+    @Column(name = "FECHA_DE_INGRESO",nullable = false)
     private LocalDate fechaIngreso;
 
     @OneToOne(mappedBy = "paciente", cascade = CascadeType.REMOVE) //si se borra el paciente se borrara el domicilio
@@ -21,7 +28,7 @@ public class Paciente {
 
 
 
-    public Paciente(int id, String nombre, String apellido, int dni, LocalDate fechaIngreso, Domicilio domicilio) {
+    public Paciente(Long id, String nombre, String apellido, int dni, LocalDate fechaIngreso, Domicilio domicilio) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -40,11 +47,11 @@ public class Paciente {
 
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

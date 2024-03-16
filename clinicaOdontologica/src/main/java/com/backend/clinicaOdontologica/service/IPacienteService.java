@@ -9,5 +9,5 @@ public interface IPacienteService {
 
     List<PacienteSalidaDto> listarPacientes();
 
-    PacienteSalidaDto buscarPacientePorId(int id);
+    PacienteSalidaDto buscarPacientePorId(Long id);
 }

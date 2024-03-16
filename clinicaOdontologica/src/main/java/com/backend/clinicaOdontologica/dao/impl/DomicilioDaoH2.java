@@ -36,7 +36,7 @@ public class DomicilioDaoH2 implements IDao<Domicilio> {
             domicilioRegistrado = new Domicilio(domicilio.getCalle(), domicilio.getNumero(), domicilio.getLocalidad(), domicilio.getProvincia());
 
             while (resultSet.next()) {
-                domicilioRegistrado.setId(resultSet.getInt("id"));
+                domicilioRegistrado.setId(resultSet.getLong("id"));
             }
 
 
@@ -135,7 +135,7 @@ public class DomicilioDaoH2 implements IDao<Domicilio> {
 
     private Domicilio crearObjetoDomicilio(ResultSet resultSet) throws SQLException {
 
-        return new Domicilio(resultSet.getInt("id"), resultSet.getString("calle"), resultSet.getInt("numero"), resultSet.getString("localidad"), resultSet.getString("provincia"));
+        return new Domicilio(resultSet.getLong("id"), resultSet.getString("calle"), resultSet.getInt("numero"), resultSet.getString("localidad"), resultSet.getString("provincia"));
 
     }
 }

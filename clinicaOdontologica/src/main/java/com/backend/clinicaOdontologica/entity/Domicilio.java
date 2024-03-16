@@ -7,14 +7,21 @@ import javax.persistence.*;
 public class Domicilio {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
-    
+    private Long id;
+
+    @Column(nullable = false)
     private String calle;
+
+    @Column(nullable = false)
     private int numero;
+
+    @Column(nullable = false)
     private String localidad;
+
+    @Column(nullable = false)
     private String provincia;
 
-    public Domicilio(int id, String calle, int numero, String localidad, String provincia) {
+    public Domicilio(Long id, String calle, int numero, String localidad, String provincia) {
         this.id = id;
         this.calle = calle;
         this.numero = numero;
@@ -29,11 +36,11 @@ public class Domicilio {
         this.provincia = provincia;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -69,5 +76,14 @@ public class Domicilio {
         this.provincia = provincia;
     }
 
+    @Override
+    public String toString() {
+        return "Domicilio: " +
+                "id=" + id +
+                ", calle='" + calle + '\'' +
+                ", numero=" + numero +
+                ", localidad='" + localidad + '\'' +
+                ", provincia='" + provincia + '\'';
+    }
 
 }

@@ -49,4 +49,10 @@ public class TurnoSalidaDto {
     public void setFechaYHora(LocalDateTime fechaYHora) {
         this.fechaYHora = fechaYHora;
     }
+
+    public void setPacienteSalidaDto(PacienteSalidaDto pacienteSalidaDto) {
+    }
+
+    public void setOdontologoSalidaDto(OdontologoSalidaDto odontologoSalidaDto) {
+    }
 }

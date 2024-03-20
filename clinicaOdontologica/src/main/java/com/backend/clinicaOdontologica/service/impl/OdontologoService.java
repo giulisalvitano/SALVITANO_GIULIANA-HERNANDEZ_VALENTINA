@@ -1,5 +1,6 @@
 package com.backend.clinicaOdontologica.service.impl;
 
+import com.backend.clinicaOdontologica.dto.salida.OdontologoSalidaDto;
 import com.backend.clinicaOdontologica.entity.Odontologo;
 import com.backend.clinicaOdontologica.repository.OdontologoRepository;
 import com.backend.clinicaOdontologica.service.IOdontologoService;
@@ -31,5 +32,8 @@ public class OdontologoService implements IOdontologoService {
     }
 
 
+    public OdontologoSalidaDto buscarOdontologoPorId(Long idOdontologo) {
+    return null;
+    }
 }
 

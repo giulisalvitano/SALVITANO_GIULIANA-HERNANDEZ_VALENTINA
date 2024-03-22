@@ -6,20 +6,24 @@ import javax.persistence.*;
 @Table(name = "DOMICILIOS")
 public class Domicilio {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false,   length = 50)
     private String calle;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 6)
     private int numero;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String localidad;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String provincia;
+
+    public Domicilio() {
+    }
+
 
     public Domicilio(Long id, String calle, int numero, String localidad, String provincia) {
         this.id = id;
@@ -29,12 +33,6 @@ public class Domicilio {
         this.provincia = provincia;
     }
 
-    public Domicilio(String calle, int numero, String localidad, String provincia) {
-        this.calle = calle;
-        this.numero = numero;
-        this.localidad = localidad;
-        this.provincia = provincia;
-    }
 
     public Long getId() {
         return id;

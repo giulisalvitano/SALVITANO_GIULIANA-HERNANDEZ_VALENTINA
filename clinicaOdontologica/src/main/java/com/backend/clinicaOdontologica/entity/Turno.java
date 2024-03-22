@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Table(name = "TURNOS")
 public class Turno {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

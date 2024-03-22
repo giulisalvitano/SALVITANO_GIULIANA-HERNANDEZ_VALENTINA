@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Table(name = "PACIENTES")
 public class Paciente {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, length = 50)
@@ -22,22 +22,15 @@ public class Paciente {
     @Column(name = "FECHA_DE_INGRESO",nullable = false)
     private LocalDate fechaIngreso;
 
-    @OneToOne(mappedBy = "paciente", cascade = CascadeType.REMOVE) //si se borra el paciente se borrara el domicilio
-    @JoinColumn(name = "domicilio_id") // un paciente tiene un domicilio, y un domicilio tiene un paciente
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "domicilio_id")
     private Domicilio domicilio;
 
-
+    public Paciente() {
+    }
 
     public Paciente(Long id, String nombre, String apellido, int dni, LocalDate fechaIngreso, Domicilio domicilio) {
         this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
-        this.fechaIngreso = fechaIngreso;
-        this.domicilio = domicilio;
-    }
-
-    public Paciente(String nombre, String apellido, int dni, LocalDate fechaIngreso, Domicilio domicilio) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;

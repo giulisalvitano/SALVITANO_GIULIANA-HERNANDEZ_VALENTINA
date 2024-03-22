@@ -5,8 +5,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class OdontologoEntradaDto {
-
-    @NotNull(message = "La matricula no puede ser nulo")
     @NotBlank(message = "Debe especificarse la matricula del odontólogo")
     @Size(min = 10, max = 50, message = "El campo debe tener mínimo 10 caracteres")
     private String matricula;

@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "ODONTOLOGOS")
 public class Odontologo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, length = 50, unique = true)
@@ -22,11 +22,6 @@ public class Odontologo {
     public Odontologo() {
     }
 
-    public Odontologo(String matricula, String nombre, String apellido) {
-        this.matricula = matricula;
-        this.nombre = nombre;
-        this.apellido = apellido;
-    }
 
     public Odontologo(Long id, String matricula, String nombre, String apellido) {
         this.id = id;

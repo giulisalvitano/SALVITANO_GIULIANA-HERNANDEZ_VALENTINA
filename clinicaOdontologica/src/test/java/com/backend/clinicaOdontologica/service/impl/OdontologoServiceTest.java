@@ -1,8 +1,6 @@
 package com.backend.clinicaOdontologica.service.impl;
 
 import org.junit.jupiter.api.Test;
-import com.backend.clinicaOdontologica.dao.impl.OdontologoDaoH2;
-import com.backend.clinicaOdontologica.dao.impl.OdontologoDaoMemoria;
 import com.backend.clinicaOdontologica.entity.Odontologo;
 import com.backend.clinicaOdontologica.service.impl.OdontologoService;
 

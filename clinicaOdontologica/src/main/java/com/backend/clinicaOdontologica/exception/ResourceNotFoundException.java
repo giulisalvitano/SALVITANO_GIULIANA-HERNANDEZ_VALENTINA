@@ -1,7 +1,8 @@
 package com.backend.clinicaOdontologica.exception;
 
-public class ResourceNotFoundException extends RuntimeException{
-    public ResourceNotFoundException(String mensaje, Long id) {
-        super(mensaje);
+public class ResourceNotFoundException extends Exception {
+
+    public ResourceNotFoundException(String message) {
+        super(message);
     }
 }

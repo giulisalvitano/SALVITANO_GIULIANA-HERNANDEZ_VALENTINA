@@ -77,7 +77,7 @@ public class PacienteService implements IPacienteService {
             pacienteRepository.deleteById(id);
             LOGGER.warn("Se ha eliminado el paciente con id {}", id);
         }else {
-            throw new ResourceNotFoundException("No existe registro del paciente con id {}", id);
+            throw new ResourceNotFoundException("No existe registro del paciente con id {}" + id);
         }
 
     }

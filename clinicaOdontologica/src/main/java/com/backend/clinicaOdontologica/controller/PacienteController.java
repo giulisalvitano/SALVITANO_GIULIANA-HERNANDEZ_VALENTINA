@@ -2,6 +2,7 @@ package com.backend.clinicaOdontologica.controller;
 
 import com.backend.clinicaOdontologica.dto.entrada.PacienteEntradaDto;
 import com.backend.clinicaOdontologica.dto.salida.PacienteSalidaDto;
+import com.backend.clinicaOdontologica.exception.BadRequestException;
 import com.backend.clinicaOdontologica.exception.ResourceNotFoundException;
 import com.backend.clinicaOdontologica.service.IPacienteService;
 
@@ -44,9 +45,9 @@ public class PacienteController {
 
 
     //PUT
-    @PutMapping("/actualizar/{id}")
-    public ResponseEntity<PacienteSalidaDto> actualizarPaciente(@RequestBody @Valid PacienteEntradaDto paciente) {
-        return null;
+    @PutMapping("/actualizar/{id}")//localhost:8080/pacientes/actualizar/x
+    public ResponseEntity<PacienteSalidaDto> actualizarPaciente(@RequestBody @Valid PacienteEntradaDto paciente, @PathVariable Long id) throws ResourceNotFoundException, BadRequestException {
+        return new ResponseEntity<>(pacienteService.modificarPaciente(paciente, id), HttpStatus.OK);
     }
 
     //DELETE

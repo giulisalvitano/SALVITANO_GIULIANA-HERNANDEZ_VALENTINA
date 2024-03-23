@@ -25,6 +25,7 @@ public class TurnoEntradaDto {
         this.idOdontologo = idOdontologo;
         this.idPaciente = idPaciente;
         this.fechaYHora = fechaYHora;
+
     }
 
     public Long getIdOdontologo() {

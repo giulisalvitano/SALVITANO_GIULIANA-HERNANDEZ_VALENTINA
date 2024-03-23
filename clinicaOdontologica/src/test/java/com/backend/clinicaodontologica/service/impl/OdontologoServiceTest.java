@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestPropertySource(locations = "classpath:application-test.properties")
-
 class OdontologoServiceTest {
 
     @Autowired
@@ -41,16 +40,21 @@ class OdontologoServiceTest {
 
     @Test
     @Order(2)
-    void deberiaDevolverUnaListaNoVaciaDePacientes() {
+    void deberiaDevolverUnaListaNoVaciaDeOdontologos() {
         // Act
         List<OdontologoSalidaDto> odontologos = odontologoService.listarOdontologos();
-
 
         // Assert
         Assertions.assertFalse(odontologos.isEmpty());
     }
 
 
+    @Test
+    @Order(3)
+    void deberiaEliminarseElOdontologoConID1() {
+
+        assertDoesNotThrow(() -> odontologoService.eliminarOdontologo(1L));
+    }
 
 
 }

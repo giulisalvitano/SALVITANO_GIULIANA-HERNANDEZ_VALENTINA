@@ -1,4 +1,8 @@
+/*let boton = document.getElementById("btn_registrar")
 
+boton.addEventListener("click", evento =>{
+registrarOdontologo();
+});*/
 
 // JavaScript (script.js)
 document.addEventListener('DOMContentLoaded', () => {
@@ -56,4 +60,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     fetchOdontologos();
+
 });

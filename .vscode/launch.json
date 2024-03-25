@@ -1,0 +1,21 @@
+{
+    // Use IntelliSense para saber los atributos posibles.
+    // Mantenga el puntero para ver las descripciones de los existentes atributos.
+    // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "ClinicaOdontologicaApplication",
+            "request": "launch",
+            "mainClass": "com.backend.clinicaOdontologica.ClinicaOdontologicaApplication",
+            "projectName": "clinicaOdontologica"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Open paciente.html",
+            "file": "/workspaces/clinicaOdontologica/clinicaOdontologica/src/main/java/com/backend/clinicaOdontologica/ClinicaOdontologicaApplication.java"
+        }
+    ]
+}

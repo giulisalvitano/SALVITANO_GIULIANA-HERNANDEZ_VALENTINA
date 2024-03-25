@@ -1,5 +1,6 @@
 package com.backend.clinicaOdontologica.service.impl;
 
+import com.backend.clinicaOdontologica.dto.entrada.PacienteEntradaDto;
 import com.backend.clinicaOdontologica.dto.entrada.TurnoEntradaDto;
 import com.backend.clinicaOdontologica.dto.salida.OdontologoSalidaDto;
 import com.backend.clinicaOdontologica.dto.salida.PacienteSalidaDto;
@@ -12,6 +13,7 @@ import com.backend.clinicaOdontologica.exception.ResourceNotFoundException;
 import com.backend.clinicaOdontologica.service.ITurnoService;
 import com.backend.clinicaOdontologica.utils.JsonPrinter;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -29,11 +31,14 @@ public class TurnoService implements ITurnoService {
     private final Logger LOGGER = LoggerFactory.getLogger(TurnoService.class);
 
     private final ModelMapper modelMapper;
+
     private final TurnoRepository turnoRepository;
     private final PacienteRepository pacienteRepository;
     private final OdontologoRepository odontologoRepository;
     private final PacienteService pacienteService;
     private final OdontologoService odontologoService;
+
+
 
 
     public TurnoService(ModelMapper modelMapper, TurnoRepository turnoRepository, PacienteRepository pacienteRepository, OdontologoRepository odontologoRepository, PacienteService pacienteService, OdontologoService odontologoService) {
@@ -46,11 +51,18 @@ public class TurnoService implements ITurnoService {
     }
 
 
+
+
     @Override
     public TurnoSalidaDto registrarTurno(TurnoEntradaDto turnoEntradaDto) throws BadRequestException {
+
+
         TurnoSalidaDto turnoSalidaDto;
-        PacienteSalidaDto paciente = pacienteService.buscarPacientePorId(turnoEntradaDto.getIdPaciente());
         OdontologoSalidaDto odontologo = odontologoService.buscarOdontologoPorId(turnoEntradaDto.getIdOdontologo());
+
+        PacienteSalidaDto paciente = pacienteService.buscarPacientePorId(turnoEntradaDto.getIdPaciente());
+
+
 
         String pacienteNoEnBdd = "El paciente no se encuentra en nuestra base de datos";
         String odontologoNoEnBdd = "El odontologo no se encuentra en nuestra base de datos";
@@ -155,9 +167,30 @@ public class TurnoService implements ITurnoService {
 
 
 
+    private void configureMapping() {
+        modelMapper.typeMap(TurnoEntradaDto.class, Turno.class)
+                .addMappings(mapper -> mapper.map(TurnoEntradaDto::getIdOdontologo, Turno::setOdontologo));
+
+        modelMapper.typeMap(TurnoEntradaDto.class, Turno.class)
+                .addMappings(mapper -> mapper.map(TurnoEntradaDto::getIdPaciente, Turno::setPaciente));
+
+    }
+
+//
+//    private void configureMapping() {
+//        modelMapper.createTypeMap(TurnoEntradaDto.class, Turno.class)
+//                .setConverter(context -> {
+//                    TurnoEntradaDto source = context.getSource();
+//                    Turno destination = context.getDestination();
+//                    destination.setOdontologo(source.getIdOdontologo());
+//                    destination.setOdontologo(source.getIdPaciente());
+//                    return destination;
+//                });
+//    }
+
+
 
 }
-
 
 
 

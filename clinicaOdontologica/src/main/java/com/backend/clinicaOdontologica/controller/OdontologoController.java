@@ -1,7 +1,11 @@
 package com.backend.clinicaOdontologica.controller;
 
 import com.backend.clinicaOdontologica.dto.entrada.OdontologoEntradaDto;
+import com.backend.clinicaOdontologica.dto.entrada.PacienteEntradaDto;
 import com.backend.clinicaOdontologica.dto.salida.OdontologoSalidaDto;
+import com.backend.clinicaOdontologica.dto.salida.PacienteSalidaDto;
+import com.backend.clinicaOdontologica.exception.BadRequestException;
+import com.backend.clinicaOdontologica.exception.ResourceNotFoundException;
 import com.backend.clinicaOdontologica.service.impl.OdontologoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +31,7 @@ public class OdontologoController {
         return new ResponseEntity<>(odontologoService.guardarOdontologo(odontologo), HttpStatus.CREATED);
     }
 
-    //PUT
 
-    @PutMapping("actualizar/{id}")
-    public ResponseEntity<OdontologoSalidaDto> actualizarOdontologo(@Valid @RequestBody OdontologoEntradaDto odontologo, @PathVariable Long id) {
-        return null;
-    }
 
     //GET
 
@@ -51,10 +50,17 @@ public class OdontologoController {
     //DELETE
 
     @DeleteMapping("eliminar/{id}")
-    public ResponseEntity<?> eliminarOdontologo(@PathVariable Long id) {
+    public ResponseEntity<?> eliminarOdontologo(@PathVariable Long id) throws ResourceNotFoundException {
         odontologoService.eliminarOdontologo(id);
         return new ResponseEntity<>("Odontologo eliminado correctamente", HttpStatus.NO_CONTENT);
 
+    }
+
+    //PUT
+
+    @PutMapping("/actualizar/{id}")//localhost:8080/odontologos/actualizar/x
+    public ResponseEntity<OdontologoSalidaDto> actualizarOdontologo(@RequestBody @Valid OdontologoEntradaDto odontologoEntradaDto, @PathVariable Long id) throws ResourceNotFoundException, BadRequestException {
+        return new ResponseEntity<>(odontologoService.modificarOdontologo(odontologoEntradaDto, id), HttpStatus.OK);
     }
 
 }

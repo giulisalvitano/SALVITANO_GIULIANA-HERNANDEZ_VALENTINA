@@ -1,5 +1,8 @@
 package com.backend.clinicaOdontologica.entity;
 
+import com.backend.clinicaOdontologica.dto.entrada.TurnoEntradaDto;
+import org.modelmapper.ModelMapper;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -44,6 +47,7 @@ public class Turno {
         this.id = id;
     }
 
+
     public Odontologo getOdontologo() {
         return odontologo;
     }
@@ -68,14 +72,14 @@ public class Turno {
         this.fechaYHora = fechaYHora;
     }
 
-    @Override
-    public String toString() {
-        return "Turno{" +
-                "id=" + id +
-                ", ontology=" + odontologo +
-                ", paciente=" + paciente +
-                ", fechaYHora=" + fechaYHora +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Turno{" +
+//                "id=" + id +
+//                ", odontologo=" + odontologo +
+//                ", paciente=" + paciente +
+//                ", fechaYHora=" + fechaYHora +
+//                '}';
+//    }
 
 }

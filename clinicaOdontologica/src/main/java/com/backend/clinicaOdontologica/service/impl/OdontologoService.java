@@ -3,6 +3,7 @@ package com.backend.clinicaOdontologica.service.impl;
 import com.backend.clinicaOdontologica.dto.entrada.OdontologoEntradaDto;
 import com.backend.clinicaOdontologica.dto.salida.OdontologoSalidaDto;
 import com.backend.clinicaOdontologica.entity.Odontologo;
+import com.backend.clinicaOdontologica.exception.ResourceNotFoundException;
 import com.backend.clinicaOdontologica.repository.OdontologoRepository;
 import com.backend.clinicaOdontologica.service.IOdontologoService;
 import org.modelmapper.ModelMapper;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 
@@ -64,29 +66,49 @@ public class OdontologoService implements IOdontologoService {
 
     }
 
+
+//    @Override
+//    public OdontologoSalidaDto modificarOdontologo(OdontologoEntradaDto odontologoEntradaDto, Long id) {
+//        Odontologo odontologoRecibido = modelMapper.map(odontologoEntradaDto, Odontologo.class);
+//        Odontologo odontologoAActualizar = odontologoRepository.findById(id).orElse(null);
+//        OdontologoSalidaDto odontologoSalidaDto = null;
+//
+//        if (odontologoAActualizar != null) {
+//
+//            odontologoAActualizar = odontologoRecibido;
+//            odontologoRepository.save(odontologoAActualizar);
+//
+//            odontologoSalidaDto = modelMapper.map(odontologoAActualizar, OdontologoSalidaDto.class);
+//
+//            LOGGER.warn("Odontologo actualizado: {}", odontologoSalidaDto);
+//
+//        } else {
+//            LOGGER.error("No fue posible actualizar los datos ya que el odontologo no se encuentra registrado");
+//
+//        }
+//
+//
+//        return odontologoSalidaDto;
+//    }
+
     @Override
-    public OdontologoSalidaDto modificarOdontologo(OdontologoEntradaDto odontologoEntradaDto, Long id) {
-        Odontologo odontologoRecibido = modelMapper.map(odontologoEntradaDto, Odontologo.class);
-        Odontologo odontologoAActualizar = odontologoRepository.findById(id).orElse(null);
-        OdontologoSalidaDto odontologoSalidaDto = null;
+    public OdontologoSalidaDto modificarOdontologo(OdontologoEntradaDto odontologo, Long id) {
+        Optional<Odontologo> optionalOdontologo = odontologoRepository.findById(id);
+        if (optionalOdontologo.isPresent()) {
+            Odontologo odontologoAActualizar = optionalOdontologo.get();
+            odontologoAActualizar.setApellido(odontologo.getApellido());
+            odontologoAActualizar.setNombre(odontologo.getNombre());
+            odontologoAActualizar.setMatricula(odontologo.getMatricula());
 
-        if (odontologoAActualizar != null) {
-
-            odontologoAActualizar = odontologoRecibido;
-            odontologoRepository.save(odontologoAActualizar);
-
-            odontologoSalidaDto = modelMapper.map(odontologoAActualizar, OdontologoSalidaDto.class);
-
-            LOGGER.warn("Odontologo actualizado: {}", odontologoSalidaDto);
-
+            Odontologo odontologoActualizado = odontologoRepository.save(odontologoAActualizar);
+            LOGGER.info("Odontologo actualizado: {}", odontologoActualizado);
+            return modelMapper.map(odontologoActualizado, OdontologoSalidaDto.class);
         } else {
-            LOGGER.error("No fue posible actualizar los datos ya que el odontologo no se encuentra registrado");
-
+            LOGGER.info("No se encontró el odontologo a actualizar con id: {}", id);
+            return null;
         }
-
-
-        return odontologoSalidaDto;
     }
+
 
 
 

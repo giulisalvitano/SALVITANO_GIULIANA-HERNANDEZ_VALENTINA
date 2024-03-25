@@ -1,6 +1,37 @@
+let boton = document.getElementById("btn_registrar")
+
+boton.addEventListener("click", evento =>{
+registrarOdontologo();
+});
+
+let registrarOdontologo = async()=> {
+
+let campos = {};
+
+
+campos.id_odontologo = document.getElementById("id_odontologo").value;
+campos.matricula = document.getElementById('matricula').value;
+campos.nombre = document.getElementById('nombre').value;
+campos.apellido = document.getElementById('apellido').value;
+
+const odontologo = await fetch("http://localhost:8080/odontologos/registrar"), {
+
+ethod: 'POST',
+ headers: {
+ 'Accept': 'application/json'
+ 'Content-Type': 'application/json'
+ },
+ body: JSON.stringify(campos)
+
+}
+}
+
+
+
+
 // JavaScript (script.js)
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('odontologoForm');
+    const form = document.getElementById('id_odontologo');
     const tableBody = document.querySelector('#odontologosTable tbody');
 
     form.addEventListener('submit', async (event) => {

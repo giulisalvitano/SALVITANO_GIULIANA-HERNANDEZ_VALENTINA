@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Odontólogos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+<header class="bg-dark text-white py-4">
+    <div class="container">
+        <h1 class="text-center">Gestión de Odontólogos</h1>
+    </div>
+</header>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Matrícula</th>
+                </tr>
+                </thead>
+                <tbody id="tbody-odontologos">
+                <!-- Aquí se mostrarán los odontólogos -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title text-center">Agregar/Actualizar Odontólogo</h5>
+                </div>
+                <div class="card-body">
+                    <form id="id_odontologo">
+                        <input type="hidden" id="idOdontologo"/>
+                        <div class="form-group">
+                            <label for="numeroDeMatricula">Matrícula:</label>
+                            <input type="text" class="form-control" id="numeroDeMatricula" name="numeroDeMatricula" placeholder="Matrícula">
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre">
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido">Apellido:</label>
+                            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-4">
+            <a href="index.html" class="btn btn-secondary btn-block">Volver al Inicio</a>
+        </div>
+    </div>
+</div>
+
+<script src="js/odontologo.js"> </script>
+
+</body>
+</html>

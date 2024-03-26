@@ -1,7 +1,10 @@
 package com.backend.clinicaOdontologica.entity;
 
 import com.backend.clinicaOdontologica.dto.entrada.TurnoEntradaDto;
+import com.backend.clinicaOdontologica.dto.salida.TurnoSalidaDto;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -45,6 +48,8 @@ public class Turno {
 
     public void setId(Long id) {
         this.id = id;
+        this.setOdontologo(odontologo);
+        this.setPaciente(paciente);
     }
 
 
@@ -81,5 +86,38 @@ public class Turno {
 //                ", fechaYHora=" + fechaYHora +
 //                '}';
 //    }
+
+
+    ModelMapper modelMapper;
+    private void configureMapping() {
+        modelMapper.getConfiguration()
+                .setPropertyCondition(Conditions.isNotNull())
+                .setMatchingStrategy(MatchingStrategies.STRICT);
+
+        modelMapper.createTypeMap(TurnoEntradaDto.class, Turno.class)
+                .addMappings(mapping -> {
+                    mapping.skip(Turno::setPaciente);
+                    mapping.skip(Turno::setOdontologo);
+                })
+                .setPropertyCondition(Conditions.isNotNull()) // Establecer la condición para mapear solo si las propiedades no son nulas
+                .setPostConverter(context -> {
+                    TurnoEntradaDto source = context.getSource();
+                    Turno destination = context.getDestination();
+                    if (source.getIdPaciente() != null) {
+                        Paciente paciente = new Paciente();
+                        paciente.setId(source.getIdPaciente());
+                        destination.setPaciente(paciente); // Asignar el ID del paciente al turno
+                    }
+                    if (source.getIdOdontologo() != null) {
+                        Odontologo odontologo = new Odontologo();
+                        odontologo.setId(source.getIdOdontologo());
+                        destination.setOdontologo(odontologo); // Asignar el ID del odontólogo al turno
+                    }
+                    return destination;
+                });
+
+        modelMapper.createTypeMap(Turno.class, TurnoSalidaDto.class)
+                .addMappings(mapping -> mapping.skip(TurnoSalidaDto::setId));
+    }
 
 }

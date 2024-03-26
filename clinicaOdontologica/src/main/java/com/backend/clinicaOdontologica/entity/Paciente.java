@@ -38,6 +38,9 @@ public class Paciente {
         this.domicilio = domicilio;
     }
 
+    public Paciente(Long idPaciente) {
+
+    }
 
 
     public Long getId() {

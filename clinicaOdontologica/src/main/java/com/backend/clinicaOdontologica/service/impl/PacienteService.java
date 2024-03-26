@@ -95,6 +95,7 @@ public class PacienteService implements IPacienteService {
             pacienteAActualizar.setApellido(pacienteRecibido.getApellido());
             pacienteAActualizar.setDni(pacienteRecibido.getDni());
             pacienteAActualizar.setFechaIngreso(pacienteRecibido.getFechaIngreso());
+            pacienteAActualizar.getDomicilio().setCalle(pacienteRecibido.getDomicilio().getCalle());
             pacienteAActualizar.getDomicilio().setNumero(pacienteRecibido.getDomicilio().getNumero());
             pacienteAActualizar.getDomicilio().setLocalidad(pacienteRecibido.getDomicilio().getLocalidad());
             pacienteAActualizar.getDomicilio().setProvincia(pacienteRecibido.getDomicilio().getProvincia());

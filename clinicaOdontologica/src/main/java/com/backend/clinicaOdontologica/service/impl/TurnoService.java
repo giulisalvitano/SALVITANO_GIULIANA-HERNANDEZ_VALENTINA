@@ -39,8 +39,6 @@ public class TurnoService implements ITurnoService {
     private final OdontologoService odontologoService;
 
 
-
-
     public TurnoService(ModelMapper modelMapper, TurnoRepository turnoRepository, PacienteRepository pacienteRepository, OdontologoRepository odontologoRepository, PacienteService pacienteService, OdontologoService odontologoService) {
         this.modelMapper = modelMapper;
         this.turnoRepository = turnoRepository;
@@ -49,8 +47,6 @@ public class TurnoService implements ITurnoService {
         this.pacienteRepository = pacienteRepository;
         this.odontologoRepository = odontologoRepository;
     }
-
-
 
 
     @Override
@@ -63,10 +59,11 @@ public class TurnoService implements ITurnoService {
         PacienteSalidaDto paciente = pacienteService.buscarPacientePorId(turnoEntradaDto.getIdPaciente());
 
 
-
         String pacienteNoEnBdd = "El paciente no se encuentra en nuestra base de datos";
         String odontologoNoEnBdd = "El odontologo no se encuentra en nuestra base de datos";
         String ambosNulos = "El paciente y el odontologo no se encuentran en nuestra base de datos";
+
+
 
         if (paciente == null || odontologo == null) {
             if (paciente == null && odontologo == null) {
@@ -80,15 +77,25 @@ public class TurnoService implements ITurnoService {
                 throw new BadRequestException(odontologoNoEnBdd);
             }
 
+
         } else {
-            Turno turnoNuevo = turnoRepository.save(modelMapper.map(turnoEntradaDto, Turno.class));
-            turnoSalidaDto = entidadADtoSalida(turnoNuevo, paciente, odontologo);
-            LOGGER.info("Nuevo turno registrado con exito: {}", turnoSalidaDto);
+            // Crear un nuevo turno y asignar el paciente y el odontólogo
+            Turno turnoNuevo = modelMapper.map(turnoEntradaDto, Turno.class);
+            turnoNuevo.setPaciente(modelMapper.map(paciente, Paciente.class));
+            turnoNuevo.setOdontologo(modelMapper.map(odontologo, Odontologo.class));
+
+            // Guardar el turno en la base de datos
+            Turno turnoGuardado = turnoRepository.save(turnoNuevo);
+            turnoSalidaDto = entidadADtoSalida(turnoGuardado, paciente, odontologo);
+            LOGGER.info("Nuevo turno registrado con éxito: {}", turnoSalidaDto);
         }
+
 
 
         return turnoSalidaDto;
     }
+
+
 
 
     @Override
@@ -165,13 +172,11 @@ public class TurnoService implements ITurnoService {
     }
 
 
-
-
     private void configureMapping() {
-        modelMapper.typeMap(TurnoEntradaDto.class, Turno.class)
+        modelMapper.emptyTypeMap(TurnoEntradaDto.class, Turno.class)
                 .addMappings(mapper -> mapper.map(TurnoEntradaDto::getIdOdontologo, Turno::setOdontologo));
 
-        modelMapper.typeMap(TurnoEntradaDto.class, Turno.class)
+        modelMapper.emptyTypeMap(TurnoEntradaDto.class, Turno.class)
                 .addMappings(mapper -> mapper.map(TurnoEntradaDto::getIdPaciente, Turno::setPaciente));
 
     }
@@ -187,7 +192,6 @@ public class TurnoService implements ITurnoService {
 //                    return destination;
 //                });
 //    }
-
 
 
 }

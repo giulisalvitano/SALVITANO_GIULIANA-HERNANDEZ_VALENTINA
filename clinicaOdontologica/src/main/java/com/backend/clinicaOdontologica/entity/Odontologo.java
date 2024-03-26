@@ -30,6 +30,10 @@ public class Odontologo {
         this.apellido = apellido;
     }
 
+    public Odontologo(Long idOdontologo) {
+
+    }
+
 
     public Long getId() {
         return id;

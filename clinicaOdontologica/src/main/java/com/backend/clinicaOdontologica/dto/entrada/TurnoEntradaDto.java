@@ -1,7 +1,8 @@
 package com.backend.clinicaOdontologica.dto.entrada;
 
 import com.backend.clinicaOdontologica.dto.salida.TurnoSalidaDto;
-import com.backend.clinicaOdontologica.entity.Odontologo;
+import com.backend.clinicaOdontologica.repository.PacienteRepository;
+import com.backend.clinicaOdontologica.repository.OdontologoRepository;
 import com.backend.clinicaOdontologica.entity.Paciente;
 import com.backend.clinicaOdontologica.entity.Turno;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -16,6 +17,10 @@ import java.time.LocalDateTime;
 
 
 public class TurnoEntradaDto {
+
+    private PacienteRepository pacienteRepository;
+    private OdontologoRepository odontologoRepository;
+
     @NotNull(message = "El ID del odontólogo no puede ser nulo")
     private Long idOdontologo;
 
@@ -34,6 +39,7 @@ public class TurnoEntradaDto {
         this.idOdontologo = idOdontologo;
         this.idPaciente = idPaciente;
         this.fechaYHora = fechaYHora;
+        configureMapping();
 
     }
 
@@ -62,12 +68,7 @@ public class TurnoEntradaDto {
     }
 
 
-
-
     ModelMapper modelMapper = new ModelMapper();
-
-
-
     private void configureMapping() {
         modelMapper.getConfiguration()
                 .setPropertyCondition(Conditions.isNotNull())
@@ -75,23 +76,13 @@ public class TurnoEntradaDto {
 
         modelMapper.createTypeMap(TurnoEntradaDto.class, Turno.class)
                 .addMappings(mapping -> {
-                    mapping.skip(Turno::setPaciente);
-                    mapping.skip(Turno::setOdontologo);
+                    mapping.map(src -> pacienteRepository.findById(src.getIdPaciente()).orElse(null), Turno::setPaciente);
+                    mapping.map(src -> odontologoRepository.findById(src.getIdOdontologo()).orElse(null), Turno::setOdontologo);
                 })
-                .setPropertyCondition(Conditions.isNotNull()) // Establecer la condición para mapear solo si las propiedades no son nulas
+                .setPropertyCondition(Conditions.isNotNull())
                 .setPostConverter(context -> {
                     TurnoEntradaDto source = context.getSource();
                     Turno destination = context.getDestination();
-                    if (source.getIdPaciente() != null) {
-                        Paciente paciente = new Paciente();
-                        paciente.setId(source.getIdPaciente());
-                        destination.setPaciente(paciente); // Asignar el ID del paciente al turno
-                    }
-                    if (source.getIdOdontologo() != null) {
-                        Odontologo odontologo = new Odontologo();
-                        odontologo.setId(source.getIdOdontologo());
-                        destination.setOdontologo(odontologo); // Asignar el ID del odontólogo al turno
-                    }
                     return destination;
                 });
 
@@ -100,32 +91,4 @@ public class TurnoEntradaDto {
     }
 
 
-
-//    private void configureMapping() {
-//        modelMapper.getConfiguration()
-//                .setPropertyCondition(Conditions.isNotNull())
-//                .setMatchingStrategy(MatchingStrategies.STRICT);
-//
-//        modelMapper.createTypeMap(TurnoEntradaDto.class, Turno.class)
-//                .addMappings(mapping -> mapping.skip(Turno::setPaciente, Turno::setOdontologo));
-//
-//        modelMapper.createTypeMap(Turno.class, TurnoSalidaDto.class)
-//                .addMappings(mapping -> mapping.skip(TurnoSalidaDto::setId));
-//    }
-//
-
-
-
-//modelMapper.createTypeMap(TurnoEntradaDto.class, Turno.class)
-//            .addMappings(mapping -> mapping.skip(Turno::setId));
-//
-//    Turno turno = modelMapper.map(turnoEntradaDto, Turno.class);
-//turno.setOdontologo(new Odontologo(turnoEntradaDto.getIdOdontologo()));
-//turno.setPaciente(new Paciente(turnoEntradaDto.getIdPaciente()));
-//
-
-
-
-
 }
-

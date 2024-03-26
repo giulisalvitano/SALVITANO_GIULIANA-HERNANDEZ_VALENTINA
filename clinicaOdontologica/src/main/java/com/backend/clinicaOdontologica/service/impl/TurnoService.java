@@ -12,8 +12,10 @@ import com.backend.clinicaOdontologica.exception.BadRequestException;
 import com.backend.clinicaOdontologica.exception.ResourceNotFoundException;
 import com.backend.clinicaOdontologica.service.ITurnoService;
 import com.backend.clinicaOdontologica.utils.JsonPrinter;
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
+import org.modelmapper.convention.MatchingStrategies;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,7 @@ public class TurnoService implements ITurnoService {
         this.odontologoService = odontologoService;
         this.pacienteRepository = pacienteRepository;
         this.odontologoRepository = odontologoRepository;
+        configureMapping();
     }
 
 
@@ -57,7 +60,6 @@ public class TurnoService implements ITurnoService {
         OdontologoSalidaDto odontologo = odontologoService.buscarOdontologoPorId(turnoEntradaDto.getIdOdontologo());
 
         PacienteSalidaDto paciente = pacienteService.buscarPacientePorId(turnoEntradaDto.getIdPaciente());
-
 
         String pacienteNoEnBdd = "El paciente no se encuentra en nuestra base de datos";
         String odontologoNoEnBdd = "El odontologo no se encuentra en nuestra base de datos";
@@ -171,27 +173,46 @@ public class TurnoService implements ITurnoService {
         return turnoSalidaDto;
     }
 
-
-    private void configureMapping() {
-        modelMapper.emptyTypeMap(TurnoEntradaDto.class, Turno.class)
-                .addMappings(mapper -> mapper.map(TurnoEntradaDto::getIdOdontologo, Turno::setOdontologo));
-
-        modelMapper.emptyTypeMap(TurnoEntradaDto.class, Turno.class)
-                .addMappings(mapper -> mapper.map(TurnoEntradaDto::getIdPaciente, Turno::setPaciente));
-
-    }
-
 //
 //    private void configureMapping() {
 //        modelMapper.createTypeMap(TurnoEntradaDto.class, Turno.class)
-//                .setConverter(context -> {
-//                    TurnoEntradaDto source = context.getSource();
-//                    Turno destination = context.getDestination();
-//                    destination.setOdontologo(source.getIdOdontologo());
-//                    destination.setOdontologo(source.getIdPaciente());
-//                    return destination;
-//                });
+//                .addMapping(TurnoEntradaDto::getIdPaciente, Turno::setPaciente)
+//                .addMapping(TurnoEntradaDto::getIdOdontologo, Turno::setOdontologo);
+//
 //    }
+
+
+    private void configureMapping() {
+        modelMapper.getConfiguration()
+                .setPropertyCondition(Conditions.isNotNull())
+                .setMatchingStrategy(MatchingStrategies.STRICT);
+
+        modelMapper.createTypeMap(TurnoEntradaDto.class, Turno.class)
+                .addMappings(mapping -> {
+                    mapping.skip(Turno::setPaciente);
+                    mapping.skip(Turno::setOdontologo);
+                })
+                .setPropertyCondition(Conditions.isNotNull()) // Establecer la condición para mapear solo si las propiedades no son nulas
+                .setPostConverter(context -> {
+                    TurnoEntradaDto source = context.getSource();
+                    Turno destination = context.getDestination();
+                    if (source.getIdPaciente() != null) {
+                        Paciente paciente = new Paciente();
+                        paciente.setId(source.getIdPaciente());
+                        destination.setPaciente(paciente); // Asignar el ID del paciente al turno
+                    }
+                    if (source.getIdOdontologo() != null) {
+                        Odontologo odontologo = new Odontologo();
+                        odontologo.setId(source.getIdOdontologo());
+                        destination.setOdontologo(odontologo); // Asignar el ID del odontólogo al turno
+                    }
+                    return destination;
+                });
+
+        modelMapper.createTypeMap(Turno.class, TurnoSalidaDto.class)
+                .addMappings(mapping -> mapping.skip(TurnoSalidaDto::setId));
+    }
+
 
 
 }

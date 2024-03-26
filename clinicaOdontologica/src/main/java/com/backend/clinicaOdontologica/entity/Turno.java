@@ -48,9 +48,8 @@ public class Turno {
 
     public void setId(Long id) {
         this.id = id;
-        this.setOdontologo(odontologo);
-        this.setPaciente(paciente);
     }
+
 
 
     public Odontologo getOdontologo() {
@@ -76,6 +75,9 @@ public class Turno {
     public void setFechaYHora(LocalDateTime fechaYHora) {
         this.fechaYHora = fechaYHora;
     }
+
+
+
 
 //    @Override
 //    public String toString() {

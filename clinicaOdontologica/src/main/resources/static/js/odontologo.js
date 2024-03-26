@@ -1,10 +1,3 @@
-/*let boton = document.getElementById("btn_registrar")
-
-boton.addEventListener("click", evento =>{
-registrarOdontologo();
-});*/
-
-// JavaScript (script.js)
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('id_odontologo');
     const tableBody = document.querySelector('#odontologosTable tbody');
@@ -37,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchOdontologos() {
         try {
-            const response = await fetch('/odontologos');
+            const response = await fetch('http://localhost:8080/odontologos');
             if (response.ok) {
                 const odontologos = await response.json();
                 odontologos.forEach(addRowToTable);
@@ -55,10 +48,33 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${odontologo.matricula}</td>
             <td>${odontologo.nombre}</td>
             <td>${odontologo.apellido}</td>
+            <td>
+                <button class="btn btn-danger" onclick="eliminarOdontologo(${odontologo.id})">Eliminar</button>
+            </td>
         `;
         tableBody.appendChild(row);
     }
 
     fetchOdontologos();
 
+    function eliminarOdontologo(id) {
+        // Eliminar la fila de la tabla
+        const fila = document.getElementById(`odontologo-${id}`);
+        fila.remove();
+
+        // Realizar la solicitud para eliminar el odontólogo en el backend
+        fetch(`http://localhost:8080/odontologos/eliminar/${id}`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Odontólogo eliminado correctamente');
+            } else {
+                console.error('Error al eliminar el odontólogo');
+            }
+        })
+        .catch(error => {
+            console.error('Error en la solicitud:', error);
+        });
+    }
 });

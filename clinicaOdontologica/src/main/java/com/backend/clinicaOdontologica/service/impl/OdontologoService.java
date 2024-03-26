@@ -1,8 +1,11 @@
 package com.backend.clinicaOdontologica.service.impl;
 
 import com.backend.clinicaOdontologica.dto.entrada.OdontologoEntradaDto;
+import com.backend.clinicaOdontologica.dto.entrada.PacienteEntradaDto;
 import com.backend.clinicaOdontologica.dto.salida.OdontologoSalidaDto;
+import com.backend.clinicaOdontologica.dto.salida.PacienteSalidaDto;
 import com.backend.clinicaOdontologica.entity.Odontologo;
+import com.backend.clinicaOdontologica.entity.Paciente;
 import com.backend.clinicaOdontologica.exception.ResourceNotFoundException;
 import com.backend.clinicaOdontologica.repository.OdontologoRepository;
 import com.backend.clinicaOdontologica.service.IOdontologoService;
@@ -48,12 +51,13 @@ public class OdontologoService implements IOdontologoService {
     }
 
     public List<OdontologoSalidaDto> listarOdontologos() {
-        List<OdontologoSalidaDto> odontologos = odontologoRepository.findAll().stream()
-                .map(o -> modelMapper.map(o, OdontologoSalidaDto.class)).toList();
 
-        LOGGER.info("Listado de todos los odontologos: {}", odontologos);
-
-        return odontologos;
+        List<OdontologoSalidaDto> odontologoSalidaDto = odontologoRepository.findAll()
+                .stream()
+                .map(odontologo -> modelMapper.map(odontologo, OdontologoSalidaDto.class))
+                .toList();
+        LOGGER.info("Listado de todos los odontolofos: {}", JsonPrinter.toString(odontologoSalidaDto));
+        return odontologoSalidaDto;
     }
 
     public void eliminarOdontologo(Long id) throws ResourceNotFoundException {
@@ -88,6 +92,9 @@ public class OdontologoService implements IOdontologoService {
             throw new ResourceNotFoundException("Error al modificar el odontologo");
         }
     }
+
+
+
 
 
 

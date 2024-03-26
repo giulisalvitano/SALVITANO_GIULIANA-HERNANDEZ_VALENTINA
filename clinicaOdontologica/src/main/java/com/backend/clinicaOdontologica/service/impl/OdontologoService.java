@@ -31,12 +31,16 @@ public class OdontologoService implements IOdontologoService {
         this.modelMapper = modelMapper;
     }
 
+    @Override
     public OdontologoSalidaDto guardarOdontologo(OdontologoEntradaDto odontologo) {
+        LOGGER.info("OdontologoEntradaDto: {}", JsonPrinter.toString(odontologo));
         Odontologo odGuardado = odontologoRepository.save(modelMapper.map(odontologo, Odontologo.class));
         OdontologoSalidaDto odontologoSalidaDto = modelMapper.map(odGuardado, OdontologoSalidaDto.class);
-        LOGGER.info("Odontologo guardado: {}", odontologoSalidaDto);
+        LOGGER.info("OdontologoSalidaDto: {}", JsonPrinter.toString(odontologoSalidaDto));
         return odontologoSalidaDto;
     }
+
+
 
     public OdontologoSalidaDto buscarOdontologoPorId(Long id) {
         Odontologo odontologoBuscado = odontologoRepository.findById(id).orElse(null);

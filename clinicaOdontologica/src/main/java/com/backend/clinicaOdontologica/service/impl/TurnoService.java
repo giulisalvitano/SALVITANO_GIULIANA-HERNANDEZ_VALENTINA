@@ -173,46 +173,22 @@ public class TurnoService implements ITurnoService {
         return turnoSalidaDto;
     }
 
-//
-//    private void configureMapping() {
-//        modelMapper.createTypeMap(TurnoEntradaDto.class, Turno.class)
-//                .addMapping(TurnoEntradaDto::getIdPaciente, Turno::setPaciente)
-//                .addMapping(TurnoEntradaDto::getIdOdontologo, Turno::setOdontologo);
-//
-//    }
-
 
     private void configureMapping() {
         modelMapper.getConfiguration()
                 .setPropertyCondition(Conditions.isNotNull())
                 .setMatchingStrategy(MatchingStrategies.STRICT);
 
+        // Mapeo de TurnoEntradaDto a Turno
         modelMapper.createTypeMap(TurnoEntradaDto.class, Turno.class)
                 .addMappings(mapping -> {
-                    mapping.skip(Turno::setPaciente);
-                    mapping.skip(Turno::setOdontologo);
-                })
-                .setPropertyCondition(Conditions.isNotNull()) // Establecer la condición para mapear solo si las propiedades no son nulas
-                .setPostConverter(context -> {
-                    TurnoEntradaDto source = context.getSource();
-                    Turno destination = context.getDestination();
-                    if (source.getIdPaciente() != null) {
-                        Paciente paciente = new Paciente();
-                        paciente.setId(source.getIdPaciente());
-                        destination.setPaciente(paciente); // Asignar el ID del paciente al turno
-                    }
-                    if (source.getIdOdontologo() != null) {
-                        Odontologo odontologo = new Odontologo();
-                        odontologo.setId(source.getIdOdontologo());
-                        destination.setOdontologo(odontologo); // Asignar el ID del odontólogo al turno
-                    }
-                    return destination;
+                    mapping.map(TurnoEntradaDto::getIdPaciente, Turno::setPaciente);
+                    mapping.map(TurnoEntradaDto::getIdOdontologo, Turno::setOdontologo);
                 });
 
-        modelMapper.createTypeMap(Turno.class, TurnoSalidaDto.class)
-                .addMappings(mapping -> mapping.skip(TurnoSalidaDto::setId));
+        // Mapeo de Turno a TurnoSalidaDto
+        modelMapper.createTypeMap(Turno.class, TurnoSalidaDto.class);
     }
-
 
 
 }

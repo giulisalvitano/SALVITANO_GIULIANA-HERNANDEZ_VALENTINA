@@ -21,6 +21,7 @@ import org.springframework.test.context.TestPropertySource;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Fail.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -41,70 +42,42 @@ public class TurnoServiceTest {
     @Autowired
     private OdontologoService odontologoService;
 
-
     @Test
-    void deberiaRegistrarseUnTurnoConUnPacienteDeNombreJuanyUnOdontologoDeNombreJose() {
-        // Registrar un odontólogo con el nombre "Jose"
-        //arrange
+    void deberiaRegistrarseUnTurnoConUnPacienteDeNombreJuanYUnOdontologoDeNombreJose() {
+        // Arrange: Registrar un odontólogo con el nombre "Jose"
         OdontologoEntradaDto odontologoEntradaDto = new OdontologoEntradaDto("JP24O2000", "Jose", "Perez");
-        //act
         OdontologoSalidaDto odontologoSalidaDto = odontologoService.guardarOdontologo(odontologoEntradaDto);
-
-        // Arrange
-        // Registrar un paciente con el nombre "Juan"
-        PacienteEntradaDto pacienteEntradaDto = new PacienteEntradaDto("Juan", "Perez", 123456, LocalDate.of(2024, 3, 22), new DomicilioEntradaDto("Calle", 1234, "Localidad", "Provincia"));
-        PacienteSalidaDto pacienteSalidaDto = pacienteService.registrarPaciente(pacienteEntradaDto);
-
-
-        // Verificar que los pacientes y odontólogos se hayan registrado correctamente
-        assertNotNull(pacienteSalidaDto);
-        pacienteSalidaDto.getId();
         assertNotNull(odontologoSalidaDto);
         assertNotNull(odontologoSalidaDto.getId());
+
+        // Arrange: Registrar un paciente con el nombre "Juan"
+        PacienteEntradaDto pacienteEntradaDto = new PacienteEntradaDto("Juan", "Perez", 123456, LocalDate.of(2024, 3, 22), new DomicilioEntradaDto("Calle", 1234, "Localidad", "Provincia"));
+        PacienteSalidaDto pacienteSalidaDto = pacienteService.registrarPaciente(pacienteEntradaDto);
+        assertNotNull(pacienteSalidaDto);
+        assertNotNull(pacienteSalidaDto.getId());
 
         // Obtener los IDs del paciente y del odontólogo registrados
         Long idPaciente = pacienteSalidaDto.getId();
         Long idOdontologo = odontologoSalidaDto.getId();
-        LocalDateTime fechaYHora = LocalDateTime.now();
 
-        // Act
+        // Act: Registrar un turno con el paciente y el odontólogo previamente registrados
+        LocalDateTime fechaYHora = LocalDateTime.now();
         TurnoEntradaDto turnoEntradaDto = new TurnoEntradaDto(idOdontologo, idPaciente, fechaYHora);
 
-        // Act
+        // Act: Intentar registrar el turno
         TurnoSalidaDto turnoSalidaDto = null;
         try {
             turnoSalidaDto = turnoService.registrarTurno(turnoEntradaDto);
         } catch (BadRequestException e) {
-            // Manejar la excepción (puedes imprimir un mensaje de error, registrar el error, etc.)
-            System.out.println("Error al registrar el turno: " + e.getMessage());
+            // Manejar la excepción si ocurre
+            fail("Error al registrar el turno: " + e.getMessage());
         }
 
-        // Assert
+        // Assert: Verificar que el turno se haya registrado correctamente
         assertNotNull(turnoSalidaDto);
         assertNotNull(turnoSalidaDto.getId());
     }
 
 
-//@Test
-//@Order(1)
-//void deberiaRegistrarseUnTurnoConUnPacienteDeNombreJuanyUnOdontologoDeNombreJose() {
-//    // Arrange
-//    Long idOdontologo = 1L; // ID del odontólogo "Jose"
-//    Long idPaciente = 1L;   // ID del paciente "Juan"
-//    LocalDateTime fechaYHora = LocalDateTime.now();
-//
-//    TurnoEntradaDto turnoEntradaDto = new TurnoEntradaDto(idOdontologo, idPaciente, fechaYHora);
-//
-//    // Act
-//    TurnoSalidaDto turnoSalidaDto = null;
-//    try {
-//        turnoSalidaDto = turnoService.registrarTurno(turnoEntradaDto);
-//    } catch (BadRequestException e) {
-//        // Manejar la excepción (puedes imprimir un mensaje de error, registrar el error, etc.)
-//        System.out.println("Error al registrar el turno: " + e.getMessage());
-//    }
-//
-//    // Assert
-//    assertNotNull(turnoSalidaDto);
-//    assertNotNull(turnoSalidaDto.getId());
+
 }

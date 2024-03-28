@@ -1,7 +1,6 @@
 package com.backend.clinicaOdontologica.exception;
 
 
-import org.hibernate.validator.internal.properties.Field;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;

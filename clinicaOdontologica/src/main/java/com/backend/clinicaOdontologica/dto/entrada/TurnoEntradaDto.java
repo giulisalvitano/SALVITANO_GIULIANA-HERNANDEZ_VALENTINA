@@ -1,15 +1,6 @@
 package com.backend.clinicaOdontologica.dto.entrada;
 
-import com.backend.clinicaOdontologica.dto.salida.TurnoSalidaDto;
-import com.backend.clinicaOdontologica.repository.PacienteRepository;
-import com.backend.clinicaOdontologica.repository.OdontologoRepository;
-import com.backend.clinicaOdontologica.entity.Paciente;
-import com.backend.clinicaOdontologica.entity.Turno;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.modelmapper.Conditions;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;

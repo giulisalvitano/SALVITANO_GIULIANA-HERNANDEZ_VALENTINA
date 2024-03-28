@@ -24,6 +24,7 @@ public class PacienteController {
         this.pacienteService = pacienteService;
     }
 
+
     //GET
     @GetMapping()
     public ResponseEntity<List<PacienteSalidaDto>> listarPacientes() {
@@ -56,8 +57,6 @@ public class PacienteController {
         pacienteService.eliminarPaciente(id);
         return new ResponseEntity<>("Paciente eliminado correctamente", HttpStatus.NO_CONTENT);
     }
-
-
 
 
 

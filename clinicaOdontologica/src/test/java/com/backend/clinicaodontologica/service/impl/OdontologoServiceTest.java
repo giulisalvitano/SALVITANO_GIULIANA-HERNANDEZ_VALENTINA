@@ -56,5 +56,14 @@ class OdontologoServiceTest {
         assertDoesNotThrow(() -> odontologoService.eliminarOdontologo(1L));
     }
 
+    @Test
+    @Order(4)
+    void deberiaDevolverUnaListaVaciaDeOdontologos() {
+        List<OdontologoSalidaDto> odontologos = odontologoService.listarOdontologos();
+
+        assertTrue(odontologos.isEmpty());
+    }
+
+
 
 }

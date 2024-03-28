@@ -4,10 +4,7 @@ import com.backend.clinicaOdontologica.dto.entrada.DomicilioEntradaDto;
 import com.backend.clinicaOdontologica.dto.entrada.PacienteEntradaDto;
 import com.backend.clinicaOdontologica.dto.salida.PacienteSalidaDto;
 import com.backend.clinicaOdontologica.service.impl.PacienteService;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
@@ -44,20 +41,32 @@ class PacienteServiceTest {
 
     @Test
     @Order(2)
-    void deberiaEliminarseElPacienteConId1() {
+    void deberiaDevolverUnaListaNoVaciaDePacientes() {
+        // Act
+        List<PacienteSalidaDto> pacientes = pacienteService.listarPacientes();
 
+        // Assert
+        Assertions.assertFalse(pacientes.isEmpty());
+    }
+
+
+
+    @Test
+    @Order(3)
+    void deberiaEliminarseElPacienteConId1() {
 
         assertDoesNotThrow(() -> pacienteService.eliminarPaciente(1L));
     }
 
 
     @Test
-    @Order(3)
+    @Order(4)
     void deberiaDevolverUnaListaVaciaDePacientes() {
         List<PacienteSalidaDto> pacientes = pacienteService.listarPacientes();
 
         assertTrue(pacientes.isEmpty());
     }
+
 
 
 }

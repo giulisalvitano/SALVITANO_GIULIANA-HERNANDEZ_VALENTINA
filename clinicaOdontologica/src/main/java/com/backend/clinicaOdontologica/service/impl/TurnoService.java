@@ -129,7 +129,7 @@ public class TurnoService implements ITurnoService {
 
 
     @Override
-    public void eliminarTurno(Long id) {
+    public void eliminarTurno(Long id) throws ResourceNotFoundException {
         Turno turno = turnoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Turno no encontrado con el ID proporcionado: " + id));
 

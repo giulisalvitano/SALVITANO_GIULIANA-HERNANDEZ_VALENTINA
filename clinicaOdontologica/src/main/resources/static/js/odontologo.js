@@ -1,80 +1,63 @@
+// URL base para las peticiones al servidor
+const baseUrl = 'http://localhost:8080/odontologos';
+
+// Función para cargar a la cargar la página
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('id_odontologo');
-    const tableBody = document.querySelector('#odontologosTable tbody');
+    cargarOdontologos();
+    guardarOdontologo();
+    eliminarOdontologo();
 
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const matricula = document.getElementById('matricula').value;
-        const nombre = document.getElementById('nombre').value;
-        const apellido = document.getElementById('apellido').value;
+});
 
-        try {
-            const response = await fetch('http://localhost:8080/odontologos/registrar', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ matricula, nombre, apellido })
-            });
+// Función para cargar y mostrarlos en la página
+function cargarOdontologos() {
+    fetch(baseUrl)
+        .then(response => response.json())
+        .then(odontologos => mostrarOdontologos(odontologos))
+        .catch(error => console.error('Error al cargar los odontologos:', error));
+}
 
-            if (response.ok) {
-                const odontologo = await response.json();
-                addRowToTable(odontologo);
-            } else {
-                console.error('Error al guardar el odontólogo');
-            }
-        } catch (error) {
-            console.error('Error en la solicitud:', error);
-        }
-    });
-
-    async function fetchOdontologos() {
-        try {
-            const response = await fetch('http://localhost:8080/odontologos');
-            if (response.ok) {
-                const odontologos = await response.json();
-                odontologos.forEach(addRowToTable);
-            } else {
-                console.error('Error al obtener los odontólogos');
-            }
-        } catch (error) {
-            console.error('Error en la solicitud:', error);
-        }
-    }
-
-    function addRowToTable(odontologo) {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${odontologo.matricula}</td>
-            <td>${odontologo.nombre}</td>
-            <td>${odontologo.apellido}</td>
-            <td>
-                <button class="btn btn-danger" onclick="eliminarOdontologo(${odontologo.id})">Eliminar</button>
-            </td>
+// Función para mostrar los odontólogos en la tabla
+function mostrarOdontologos(odontologos) {
+    const tbodyOdontologos = document.getElementById('tbody-odontologos');
+    tbodyOdontologos.innerHTML = ''; // Limpiar el contenido actual
+    odontologos.forEach(odontologo => {
+        const row = `
+            <tr>
+                <td>${odontologo.id}</td>
+                <td>${odontologo.nombre}</td>
+                <td>${odontologo.apellido}</td>
+                <td>${odontologo.matricula}</td>
+                <td>
+                    <button class="btn btn-primary" onclick="editarOdontologo(${odontologo.id})">Editar</button>
+                    <button class="btn btn-danger eliminar-btn" onclick="eliminarOdontologo(${odontologo.id})">Eliminar</button>
+                </td>
+            </tr>
         `;
-        tableBody.appendChild(row);
-    }
+        tbodyOdontologos.innerHTML += row;
+    });
+}
 
-    fetchOdontologos();
 
-    function eliminarOdontologo(id) {
-        // Eliminar la fila de la tabla
-        const fila = document.getElementById(`odontologo-${id}`);
-        fila.remove();
-
-        // Realizar la solicitud para eliminar el odontólogo en el backend
+function eliminarOdontologo(id) {
+    if (confirm('¿Estás seguro de eliminar el odontólogo?')) {
         fetch(`http://localhost:8080/odontologos/eliminar/${id}`, {
-            method: 'DELETE',
+            method: 'DELETE'
         })
         .then(response => {
             if (response.ok) {
-                console.log('Odontólogo eliminado correctamente');
+                // Si la eliminación es exitosa, recargar la lista de odontólogos
+                cargarOdontologos();
             } else {
-                console.error('Error al eliminar el odontólogo');
+                // Manejar errores de eliminación
+                throw new Error('Error al eliminar el odontólogo');
             }
         })
-        .catch(error => {
-            console.error('Error en la solicitud:', error);
-        });
+        .catch(error => console.error('Error al eliminar el odontólogo:', error));
     }
-});
+}
+
+
+
+
+

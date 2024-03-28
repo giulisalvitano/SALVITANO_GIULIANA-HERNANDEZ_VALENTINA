@@ -4,19 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Odontólogos</title>
-    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
-<header class="bg-dark text-white py-4">
+<header>
     <div class="container">
         <h1 class="text-center">Gestión de Odontólogos</h1>
     </div>
 </header>
 
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+<div class="alert alert-success text-center" id="alertaOdontologo" style="font-size: 20px;display:none;"></div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -31,16 +33,13 @@
                 </tbody>
             </table>
         </div>
-    </div>
-
-    <div class="row justify-content-center">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header bg-primary text-white">
                     <h5 class="card-title text-center">Agregar/Actualizar Odontólogo</h5>
                 </div>
                 <div class="card-body">
-                    <form id="id_odontologo">
+                    <form class="campos">
                         <input type="hidden" id="idOdontologo"/>
                         <div class="form-group">
                             <label for="numeroDeMatricula">Matrícula:</label>
@@ -54,20 +53,22 @@
                             <label for="apellido">Apellido:</label>
                             <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido">
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+                        <button id="guardarOdontologo" type="submit" class="btn btn-primary btn-block">Guardar</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row justify-content-center mt-4">
-        <div class="col-md-4">
-            <a href="index.html" class="btn btn-secondary btn-block">Volver al Inicio</a>
+    <footer class="bg-dark text-white py-4 mt-4">
+        <div class="container text-center">
+            <button class="btn btn-secondary" onclick="window.location.href='index.html'">Volver al Inicio</button>
         </div>
-    </div>
+    </footer>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script src="./js/odontologo.js"> </script>
 
 </body>

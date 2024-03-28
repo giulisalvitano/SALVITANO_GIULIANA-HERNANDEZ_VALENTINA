@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+
+
 @RestController
 @RequestMapping("/odontologos")
 public class OdontologoController {
@@ -21,15 +23,14 @@ public class OdontologoController {
         this.odontologoService = odontologoService;
     }
 
+
     //POST
     @PostMapping("registrar")
     public ResponseEntity<OdontologoSalidaDto> guardarOdontologo(@Valid @RequestBody OdontologoEntradaDto odontologo) {
         return new ResponseEntity<>(odontologoService.guardarOdontologo(odontologo), HttpStatus.CREATED);
     }
 
-
-
-    //GET
+   //GET
     @GetMapping("{id}")
     public ResponseEntity<OdontologoSalidaDto> obtenerOdontologoPorId(@PathVariable Long id) {
         return new ResponseEntity<>(odontologoService.buscarOdontologoPorId(id), HttpStatus.OK);
@@ -42,6 +43,7 @@ public class OdontologoController {
     }
 
     //DELETE
+
     @DeleteMapping("eliminar/{id}")
     public ResponseEntity<?> eliminarOdontologo(@PathVariable Long id) throws ResourceNotFoundException {
         odontologoService.eliminarOdontologo(id);

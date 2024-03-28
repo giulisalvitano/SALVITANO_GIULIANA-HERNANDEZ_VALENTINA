@@ -3,11 +3,65 @@ const baseUrl = 'http://localhost:8080/odontologos';
 
 // Función para cargar a la cargar la página
 document.addEventListener('DOMContentLoaded', () => {
-    cargarOdontologos();
-    guardarOdontologo();
-    eliminarOdontologo();
+const guardarOdontologo = async () => {
+    const numeroDeMatricula = document.getElementById('numeroDeMatricula').value;
+    const nombre = document.getElementById('nombre').value;
+    const apellido = document.getElementById('apellido').value;
 
-});
+    // Basic validation (optional, improve based on your requirements)
+    if (!numeroDeMatricula || !nombre || !apellido) {
+      alert('Por favor, complete todos los campos');
+      return;
+    }
+
+    const odontologo = {
+      numeroDeMatricula,
+      nombre,
+      apellido,
+    };
+
+    try {
+      const response = await fetch('http://localhost:8080/odontologos/registrar', { // Adjust URL if needed
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(odontologo),
+      });
+
+      if (response.ok) {
+        // Success
+        const data = await response.json();
+        alert(`Odontologo guardado con ID: ${data.id}`); // Or display success message
+        limpiarFormulario();
+        listarOdontologos(); // Update list (if implemented)
+      } else {
+        // Handle errors (consider more specific error handling)
+        const errorData = await response.json();
+        alert(`Error al guardar odontologo: ${errorData.message}`); // Or display specific error message
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al guardar odontologo'); // Or display generic error message
+    }
+  };
+
+  const limpiarFormulario = () => {
+    document.getElementById('idOdontologo').value = ''; // Clear hidden ID field (if applicable)
+    document.getElementById('numeroDeMatricula').value = '';
+    document.getElementById('nombre').value = '';
+    document.getElementById('apellido').value = '';
+  };
+
+  // Add event listener to the guardarOdontologo button (or appropriate element)
+  document.getElementById('guardarOdontologo').addEventListener('click', guardarOdontologo);
+
+  // Consider implementing functionality to list odontologos (if needed)
+    cargarOdontologos();
+
+
+
+
 
 // Función para cargar y mostrarlos en la página
 function cargarOdontologos() {
@@ -61,3 +115,5 @@ function eliminarOdontologo(id) {
 
 
 
+
+});

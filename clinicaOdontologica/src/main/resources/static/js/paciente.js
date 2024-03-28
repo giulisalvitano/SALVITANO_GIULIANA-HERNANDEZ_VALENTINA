@@ -17,6 +17,7 @@ function cargarPacientes() {
 }
 
 // Función para mostrar los pacientes en la tabla
+// Función para mostrar los pacientes en la tabla
 function mostrarPacientes(pacientes) {
     const tbodyPacientes = document.getElementById('tbody-pacientes');
     tbodyPacientes.innerHTML = ''; // Limpiar el contenido actual
@@ -41,6 +42,7 @@ function mostrarPacientes(pacientes) {
         tbodyPacientes.innerHTML += row;
     });
 }
+
 
 // Función para manejar la creación o actualización de un paciente
 document.getElementById('form-paciente').addEventListener('submit', function(event) {
@@ -121,16 +123,17 @@ let eliminarUrl = 'http://localhost:8080/pacientes/eliminar';
 
 // Función para eliminar un paciente
 function eliminarPaciente(id) {
-    if (confirm('¿Estás seguro de que quieres eliminar este paciente?')) {
-        fetch(`${eliminarUrl}/${id}`, {
+    if (confirm('¿Estás seguro de eliminar el paciente?')) {
+        fetch(`http://localhost:8080/pacientes/eliminar/${id}`, {
             method: 'DELETE'
         })
         .then(response => {
             if (response.ok) {
-                // Recargar los pacientes después de eliminar
+                // Si la eliminación es exitosa, recargar la lista de pacientes
                 cargarPacientes();
             } else {
-                throw new Error('No se pudo eliminar el paciente');
+                // Manejar errores de eliminación
+                throw new Error('Error al eliminar el paciente');
             }
         })
         .catch(error => console.error('Error al eliminar el paciente:', error));

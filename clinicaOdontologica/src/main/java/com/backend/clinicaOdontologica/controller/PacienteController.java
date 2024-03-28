@@ -1,6 +1,7 @@
 package com.backend.clinicaOdontologica.controller;
 
 import com.backend.clinicaOdontologica.dto.entrada.PacienteEntradaDto;
+import com.backend.clinicaOdontologica.dto.salida.OdontologoSalidaDto;
 import com.backend.clinicaOdontologica.dto.salida.PacienteSalidaDto;
 import com.backend.clinicaOdontologica.exception.BadRequestException;
 import com.backend.clinicaOdontologica.exception.ResourceNotFoundException;
@@ -25,7 +26,8 @@ public class PacienteController {
     }
 
 
-    //GET
+   //GET
+
     @GetMapping()
     public ResponseEntity<List<PacienteSalidaDto>> listarPacientes() {
         return new ResponseEntity<>(pacienteService.listarPacientes(), HttpStatus.OK);
@@ -35,7 +37,6 @@ public class PacienteController {
     public ResponseEntity<PacienteSalidaDto> buscarPacientePorId(@PathVariable Long id) {
         return new ResponseEntity<>(pacienteService.buscarPacientePorId(id), HttpStatus.OK);
     }
-
 
 
     //POST
@@ -57,7 +58,6 @@ public class PacienteController {
         pacienteService.eliminarPaciente(id);
         return new ResponseEntity<>("Paciente eliminado correctamente", HttpStatus.NO_CONTENT);
     }
-
 
 
 }

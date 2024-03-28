@@ -1,10 +1,12 @@
 package com.backend.clinicaOdontologica.controller;
 
 import com.backend.clinicaOdontologica.dto.entrada.TurnoEntradaDto;
+import com.backend.clinicaOdontologica.dto.salida.OdontologoSalidaDto;
 import com.backend.clinicaOdontologica.dto.salida.TurnoSalidaDto;
 import com.backend.clinicaOdontologica.exception.BadRequestException;
 import com.backend.clinicaOdontologica.exception.ResourceNotFoundException;
 import com.backend.clinicaOdontologica.service.ITurnoService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,7 @@ public class TurnoController {
     }
 
     //GET
+
     @GetMapping()
     public ResponseEntity<List<TurnoSalidaDto>> listarTurnos() {
         return new ResponseEntity<>(turnoService.listarTurnos(), HttpStatus.OK);

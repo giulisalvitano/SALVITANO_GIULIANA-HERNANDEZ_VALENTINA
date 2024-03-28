@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
@@ -17,9 +18,6 @@ import java.time.LocalDateTime;
 
 
 public class TurnoEntradaDto {
-
-    private PacienteRepository pacienteRepository;
-    private OdontologoRepository odontologoRepository;
 
     @NotNull(message = "El ID del odontólogo no puede ser nulo")
     private Long idOdontologo;
@@ -39,7 +37,7 @@ public class TurnoEntradaDto {
         this.idOdontologo = idOdontologo;
         this.idPaciente = idPaciente;
         this.fechaYHora = fechaYHora;
-        configureMapping();
+//        configureMapping();
 
     }
 
@@ -67,28 +65,6 @@ public class TurnoEntradaDto {
         this.fechaYHora = fechaYHora;
     }
 
-
-    ModelMapper modelMapper = new ModelMapper();
-    private void configureMapping() {
-        modelMapper.getConfiguration()
-                .setPropertyCondition(Conditions.isNotNull())
-                .setMatchingStrategy(MatchingStrategies.STRICT);
-
-        modelMapper.createTypeMap(TurnoEntradaDto.class, Turno.class)
-                .addMappings(mapping -> {
-                    mapping.map(src -> pacienteRepository.findById(src.getIdPaciente()).orElse(null), Turno::setPaciente);
-                    mapping.map(src -> odontologoRepository.findById(src.getIdOdontologo()).orElse(null), Turno::setOdontologo);
-                })
-                .setPropertyCondition(Conditions.isNotNull())
-                .setPostConverter(context -> {
-                    TurnoEntradaDto source = context.getSource();
-                    Turno destination = context.getDestination();
-                    return destination;
-                });
-
-        modelMapper.createTypeMap(Turno.class, TurnoSalidaDto.class)
-                .addMappings(mapping -> mapping.skip(TurnoSalidaDto::setId));
-    }
 
 
 }

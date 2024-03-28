@@ -11,11 +11,11 @@ public class Turno {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "odontologo_id") // un odontologo puede tener muchos turnos
+    @JoinColumn(name = "odontologo_id", referencedColumnName = "id") // un odontologo puede tener muchos turnos
     private Odontologo odontologo;
 
     @ManyToOne
-    @JoinColumn(name = "paciente_id") // un paciente puede tener muchos turnos
+    @JoinColumn(name = "paciente_id", referencedColumnName = "id") // un paciente puede tener muchos turnos
     private Paciente paciente;
     
     private LocalDateTime fechaYHora;

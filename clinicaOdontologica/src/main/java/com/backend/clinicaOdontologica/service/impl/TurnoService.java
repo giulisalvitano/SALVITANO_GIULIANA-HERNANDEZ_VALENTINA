@@ -88,7 +88,7 @@ public class TurnoService implements ITurnoService {
 
             // Guardar el turno en la base de datos
             Turno turnoGuardado = turnoRepository.save(turnoNuevo);
-            turnoSalidaDto = entidadADtoSalida(turnoGuardado, paciente, odontologo);
+            turnoSalidaDto = entidadADtoSalida(turnoGuardado);
             LOGGER.info("Nuevo turno registrado con éxito: {}", turnoSalidaDto);
         }
 
@@ -99,18 +99,17 @@ public class TurnoService implements ITurnoService {
 
 
 
-
     @Override
     public List<TurnoSalidaDto> listarTurnos() {
         List<TurnoSalidaDto> turnosSalidaDto = turnoRepository.findAll()
                 .stream()
-                .map(turno -> modelMapper.map(turno, TurnoSalidaDto.class))
-                .collect(Collectors.toList());
+                .map(this::entidadADtoSalida)
+                .toList();
 
         LOGGER.info("Listado de todos los turnos: {}", JsonPrinter.toString(turnosSalidaDto));
-
         return turnosSalidaDto;
     }
+
 
 
     @Override
@@ -119,7 +118,7 @@ public class TurnoService implements ITurnoService {
         TurnoSalidaDto turnoEncontrado = null;
 
         if (turnoBuscado != null) {
-            turnoEncontrado = modelMapper.map(turnoBuscado, TurnoSalidaDto.class);
+            turnoEncontrado = entidadADtoSalida(turnoBuscado);
             LOGGER.info("Turno encontrado: {}", JsonPrinter.toString(turnoEncontrado));
         } else {
             LOGGER.error("El ID no se encuentra registrado en la base de datos");
@@ -127,6 +126,7 @@ public class TurnoService implements ITurnoService {
 
         return turnoEncontrado;
     }
+
 
     @Override
     public void eliminarTurno(Long id) {
@@ -163,15 +163,23 @@ public class TurnoService implements ITurnoService {
         return modelMapper.map(turnoActualizado, TurnoSalidaDto.class);
     }
 
+    private PacienteSalidaDto pacienteSalidaDtoASalidaTurnoDto(Long id){
+        return pacienteService.buscarPacientePorId(id);
+    }
 
-    private TurnoSalidaDto entidadADtoSalida(Turno turno, PacienteSalidaDto pacienteSalidaDto, OdontologoSalidaDto odontologoSalidaDto) {
+    private OdontologoSalidaDto odontologoSalidaDtoASalidaTurnoDto(Long id){
+        return odontologoService.buscarOdontologoPorId(id);
+    }
+
+
+    private TurnoSalidaDto entidadADtoSalida(Turno turno) {
         TurnoSalidaDto turnoSalidaDto = modelMapper.map(turno, TurnoSalidaDto.class);
-        turnoSalidaDto.setPacienteSalidaDto(pacienteSalidaDto);
-        turnoSalidaDto.setOdontologoSalidaDto(odontologoSalidaDto);
-
+        turnoSalidaDto.setPacienteSalidaDto(pacienteSalidaDtoASalidaTurnoDto(turno.getPaciente().getId()));
+        turnoSalidaDto.setOdontologoSalidaDto(odontologoSalidaDtoASalidaTurnoDto(turno.getOdontologo().getId()));
 
         return turnoSalidaDto;
     }
+
 
 
     private void configureMapping() {
@@ -187,8 +195,13 @@ public class TurnoService implements ITurnoService {
                 });
 
         // Mapeo de Turno a TurnoSalidaDto
-        modelMapper.createTypeMap(Turno.class, TurnoSalidaDto.class);
+        modelMapper.createTypeMap(Turno.class, TurnoSalidaDto.class)
+                .addMapping(Turno::getId, TurnoSalidaDto::setId);
+
     }
+
+
+
 
 
 }

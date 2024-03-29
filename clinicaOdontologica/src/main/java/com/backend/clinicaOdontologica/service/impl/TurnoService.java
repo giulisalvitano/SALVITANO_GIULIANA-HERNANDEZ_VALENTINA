@@ -28,9 +28,7 @@ import com.backend.clinicaOdontologica.repository.TurnoRepository;
 @Service
 public class TurnoService implements ITurnoService {
     private final Logger LOGGER = LoggerFactory.getLogger(TurnoService.class);
-
     private final ModelMapper modelMapper;
-
     private final TurnoRepository turnoRepository;
     private final PacienteRepository pacienteRepository;
     private final OdontologoRepository odontologoRepository;
@@ -51,9 +49,8 @@ public class TurnoService implements ITurnoService {
 
     @Override
     public TurnoSalidaDto registrarTurno(TurnoEntradaDto turnoEntradaDto) throws BadRequestException {
-
-
         TurnoSalidaDto turnoSalidaDto;
+
         OdontologoSalidaDto odontologo = odontologoService.buscarOdontologoPorId(turnoEntradaDto.getIdOdontologo());
 
         PacienteSalidaDto paciente = pacienteService.buscarPacientePorId(turnoEntradaDto.getIdPaciente());
@@ -78,18 +75,14 @@ public class TurnoService implements ITurnoService {
 
 
         } else {
-            // Crear un nuevo turno y asignar el paciente y el odontólogo
             Turno turnoNuevo = modelMapper.map(turnoEntradaDto, Turno.class);
             turnoNuevo.setPaciente(modelMapper.map(paciente, Paciente.class));
             turnoNuevo.setOdontologo(modelMapper.map(odontologo, Odontologo.class));
 
-            // Guardar el turno en la base de datos
             Turno turnoGuardado = turnoRepository.save(turnoNuevo);
             turnoSalidaDto = entidadADtoSalida(turnoGuardado);
             LOGGER.info("Nuevo turno registrado con éxito: {}", turnoSalidaDto);
         }
-
-
 
         return turnoSalidaDto;
     }
@@ -137,24 +130,19 @@ public class TurnoService implements ITurnoService {
 
     @Override
     public TurnoSalidaDto modificarTurno(Long id, TurnoEntradaDto turnoEntradaDto) throws ResourceNotFoundException {
-        // Buscar el turno por su ID
         Turno turno = turnoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No se encontró el turno a actualizar con id: " + id));
 
-        // Obtener el odontólogo y el paciente correspondientes a los IDs proporcionados en el DTO de entrada
         OdontologoSalidaDto odontologo = odontologoService.buscarOdontologoPorId(turnoEntradaDto.getIdOdontologo());
         PacienteSalidaDto paciente = pacienteService.buscarPacientePorId(turnoEntradaDto.getIdPaciente());
 
-        // Mapear los datos del DTO de entrada al turno existente
         turno.setOdontologo(modelMapper.map(odontologo, Odontologo.class));
         turno.setPaciente(modelMapper.map(paciente, Paciente.class));
         turno.setFechaYHora(turnoEntradaDto.getFechaYHora());
 
-        // Guardar el turno actualizado en la base de datos y mapear el resultado al DTO de salida
         Turno turnoActualizado = turnoRepository.save(turno);
         return modelMapper.map(turnoActualizado, TurnoSalidaDto.class);
     }
-
 
 
 
@@ -194,9 +182,6 @@ public class TurnoService implements ITurnoService {
                 .addMapping(Turno::getId, TurnoSalidaDto::setId);
 
     }
-
-
-
 
 
 }

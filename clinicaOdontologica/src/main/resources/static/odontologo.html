@@ -9,11 +9,9 @@
 <body>
 <header>
     <div class="container">
-        <h1 class="text-center">Gestión de Odontólogos</h1>
+        <h1 class="text-center" >Gestión de Odontólogos</h1>
     </div>
 </header>
-
-
 
 <div class="container">
     <div class="row">
@@ -28,21 +26,21 @@
                 </tr>
                 </thead>
                 <tbody id="tbody-odontologos">
-                <!-- Aquí se mostrarán los odontólogos -->
+
                 </tbody>
             </table>
         </div>
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <h5 class="card-title text-center">Agregar/Actualizar Odontólogo</h5>
+                    <h5 class="card-title text-center">Agregar</h5>
                 </div>
                 <div class="card-body">
                     <form class="campos">
                         <input type="hidden" id="idOdontologo"/>
                         <div class="form-group">
                             <label for="numeroDeMatricula">Matrícula:</label>
-                            <input type="text" class="form-control" id="numeroDeMatricula" name="numeroDeMatricula" placeholder="Matrícula">
+                            <input type="text" class="form-control" id="numeroDeMatricula" name="numeroDeMatricula" placeholder="Matrícula" >
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre:</label>
@@ -60,12 +58,74 @@
         </div>
     </div>
 
-    <footer class="bg-dark text-white py-4 mt-4">
+    <footer>
         <div class="container text-center">
             <button class="btn btn-secondary" onclick="window.location.href='index.html'">Volver al Inicio</button>
         </div>
     </footer>
 </div>
+
+<style>
+
+    /* Estilos generales */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    /* Estilos para el encabezado */
+    header {
+        background-color: #007bff;
+        color: #fff;
+        padding: 20px 0;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    /* Estilos para los botones */
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    /* Estilos para las secciones */
+    .section {
+        margin-top: 50px;
+    }
+
+    .section-header {
+        margin-bottom: 20px;
+    }
+
+    /* Estilos para las tarjetas */
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    /* Estilos para el pie de página */
+    footer {
+        background-color: #343a40;
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+    }
+</style>
+
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>

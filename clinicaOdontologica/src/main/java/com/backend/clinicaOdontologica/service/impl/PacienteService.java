@@ -18,9 +18,7 @@ import java.util.List;
 @Service
 public class PacienteService implements IPacienteService {
 
-
     private final Logger LOGGER = LoggerFactory.getLogger(PacienteService.class);
-
 
     private PacienteRepository pacienteRepository;
 

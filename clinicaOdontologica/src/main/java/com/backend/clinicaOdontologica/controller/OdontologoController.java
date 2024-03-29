@@ -52,7 +52,7 @@ public class OdontologoController {
     }
 
     //PUT
-    @PutMapping("/actualizar/{id}")//localhost:8080/odontologos/actualizar/x
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<OdontologoSalidaDto> actualizarOdontologo(@RequestBody @Valid OdontologoEntradaDto odontologoEntradaDto, @PathVariable Long id) throws ResourceNotFoundException, BadRequestException {
         return new ResponseEntity<>(odontologoService.modificarOdontologo(odontologoEntradaDto, id), HttpStatus.OK);
     }

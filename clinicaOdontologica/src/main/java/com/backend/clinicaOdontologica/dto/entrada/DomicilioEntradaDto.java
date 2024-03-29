@@ -12,7 +12,6 @@ public class DomicilioEntradaDto {
     @NotBlank(message = "El campo calle no puede estar en blanco")
     private String calle;
 
-    //@NotNull(message = "El campo numero no puede ser nulo")
     @Positive(message = "El numero no puede ser nulo o menor a cero")
     @Digits(integer = 8, fraction = 0, message = "El número debe tener como máximo 8 dígitos")
     private int numero;

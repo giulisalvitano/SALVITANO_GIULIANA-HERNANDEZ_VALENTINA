@@ -3,37 +3,72 @@
 <head>
     <title>Clínica Odontológica</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 
 <body>
 
-<div class="container">
+<header>
     <h1>Clínica Odontológica</h1>
+</header>
 
+<div class="container">
     <div class="row">
         <div class="col-sm-4">
             <h2>Odontólogos</h2>
-            <button onclick="window.location.href='odontologo.html'"
-                    class="btn btn-primary">Gestionar Odontólogos
-            </button>
-        </div>
-        <div class="col-sm-4">
-            <h2>Pacientes</h2>
-            <button onclick="window.location.href='paciente.html'"
-                    class="btn btn-primary">Gestionar Pacientes
-            </button>
-        </div>
-        <div class="col-sm-4">
-            <h2>Turnos</h2>
-            <button onclick="window.location.href='turno.html'"
-                    class="btn btn-primary">Gestionar Turnos
+            <button class="btn btn-primary"
+                    onclick="window.location.href='odontologo.html'">Gestionar Odontólogos
             </button>
         </div>
 
     </div>
 </div>
+
+<style>
+
+    /* Estilos para el encabezado */
+
+    header {
+        background-color: #007bff;
+        color: #fff;
+        padding: 20px 0;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    /* Estilos para los botones */
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 15px;
+        cursor: pointer;
+        display: block;
+        margin: 0 auto;
+        margin-top: 20px;
+        width: 200px;
+    }
+    /* Estilos para el contenido de la página */
+
+    .container {
+        margin-top: 50px;
+    }
+
+    .col-sm-4 {
+        text-align: center;
+    }
+
+    /* Estilos para el botón */
+
+
+</style>
+
+
 </body>
 </html>

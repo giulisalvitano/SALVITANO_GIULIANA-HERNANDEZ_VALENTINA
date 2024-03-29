@@ -29,7 +29,6 @@ function mostrarOdontologos(odontologos) {
                 <td>${odontologo.apellido}</td>
                 <td>${odontologo.matricula}</td>
                 <td>
-                    <button class="btn btn-primary" onclick="editarOdontologo(${odontologo.id})">Editar</button>
                     <button class="btn btn-danger eliminar-btn" onclick="eliminarOdontologo(${odontologo.id})">Eliminar</button>
                 </td>
             </tr>

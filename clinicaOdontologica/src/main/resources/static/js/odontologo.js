@@ -3,6 +3,8 @@ const baseUrl = 'http://localhost:8080/odontologos';
 
 // Función para cargar a la cargar la página
 document.addEventListener('DOMContentLoaded', () => {
+    const guardarButton = document.getElementById('guardarOdontologo');
+    guardarButton.addEventListener('click', guardarOdontologo);
     cargarOdontologos();
 
 });
@@ -55,5 +57,49 @@ function eliminarOdontologo(id) {
     }
 }
 
+const baseUrlRegistrar = 'http://localhost:8080/odontologos/registrar';
+
+function guardarOdontologo() {
+    const id = document.getElementById('idOdontologo').value;
+    const matricula = document.getElementById('numeroDeMatricula').value;
+    const nombre = document.getElementById('nombre').value;
+    const apellido = document.getElementById('apellido').value;
+
+    const data = {
+        matricula: matricula,
+        nombre: nombre,
+        apellido: apellido
+    };
+
+    let url = baseUrlRegistrar; // For creating a new dentist
+
+    if (id) {
+        // If there's an ID, it means we're updating an existing dentist
+        url += `/${id}`;
+    }
+
+    fetch(url, {
+        method: id ? 'PUT' : 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            // If the dentist is successfully saved/updated, reload the list of dentists
+            cargarOdontologos();
+            // Clear the form fields after successful submission
+            document.getElementById('idOdontologo').value = '';
+            document.getElementById('numeroDeMatricula').value = '';
+            document.getElementById('nombre').value = '';
+            document.getElementById('apellido').value = '';
+        } else {
+            // Handle errors during saving/updating
+            throw new Error('Error al guardar el odontólogo');
+        }
+    })
+    .catch(error => console.error('Error al guardar el odontólogo:', error));
+}
 
 
